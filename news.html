@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>各地新闻</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description" content="疫情预测-疫情地图-2019-nCov">
+    <meta name="keywords" content="2020 wuhan Novel coronavirus, 新冠, 武汉肺炎, geo, charts, 地图,疫情,疫情可视化,疫情预测, 2019-nCov, free,2019-nCoV, coronavirus, novel, china, wuhan, news,wh">
+    <meta name="author" content="Tony Xia">
+    <link rel="icon" href="img/sufe.ico" type="images/x-ico" />
+    <link rel="stylesheet" type="text/css" href="css/head.css">
+    <link rel="stylesheet" type="text/css" href="./js/zui/css/zui-theme.css" />
+    <link rel="stylesheet" type="text/css" href="./js/zui/css/zui.css" />
+    <link rel="stylesheet" type="text/css" href="./js/zui/lib/chosen/chosen.min.css" />
+    <script src="https://cdn.bootcss.com/echarts/4.4.0-rc.1/echarts.min.js"></script>
+    <script src="incubator-echarts-4.6.0/map/js/china.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./js/jquery/jquery2.0.min.js"></script>
+    <script type="text/javascript" src="./js/common.js"></script>
+    <script type="text/javascript" src="./js/zui/js/zui.js"></script>
+    <script type="text/javascript" src="./js/zui/lib/chosen/chosen.min.js"></script>
+    <script src="js/news.js"></script>
+    <script src="js/backtotop.js"></script>
+</head>
+
+<body>
+    <div style="width:100%;height:50px;background-color: #123555">
+        <code>
+            <script>
+                console.info(   '                     ::::::::  :::    ::: :::::::::: :::::::::: \n' +
+                                '                   :+:    :+: :+:    :+: :+:        :+:         \n' +
+                                '                  +:+        +:+    +:+ +:+        +:+          \n' +
+                                '                 +#++:++#++ +#+    +:+ :#::+::#   +#++:++#      \n' +
+                                '                       +#+ +#+    +#+ +#+        +#+            \n' +
+                                '               #+#    #+# #+#    #+# #+#        #+#             \n' +
+                                '               ########   ########  ###        ##########       ')
+            </script>
+        </code>
+    </div>
+
+    <header>
+        <div style="width: 100%; height: 105px">
+            <img src="img/logo.png" alt="sufe sime" class="top">
+            <div id="top_right" class="visible-md visible-lg">
+                <p id='hide'>武汉加油 <span id="red">中国</span>加油</p>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://sime.shufe.edu.cn/" target="_blank">SUFE SIME</a>
+            </div>
+            <div id="menu" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="./index.html">&#160&#160&#160&#160主页&#160&#160&#160&#160</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            &#160&#160&#160&#160时空地图&#160&#160&#160&#160
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu navbar-inverse">
+                            <li><a href="./map_china.html" id="white">中国地图</a></li>
+                            <li><a href="./map_america.html" id="white">美国地图</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="./chart.html">&#160&#160&#160&#160可视化分析&#160&#160&#160&#160</a></li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            &#160&#160&#160&#160疫情知识&#160&#160&#160&#160
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu navbar-inverse">
+                            <li><a href="./info_0.html" id="white">辟谣专区</a></li>
+                            <li><a href="./info_1.html" id="white">可信信息</a></li>
+                            <li><a href="./info_2.html" id="white">尚未证实</a></li>
+                            <li class="divider"></li>
+                            <li class="active"><a href="./news.html" id="white">各地新闻</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="./cal.html">&#160&#160&#160&#160预测模型&#160&#160&#160&#160</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#modal">&#160&#160&#160&#160团队介绍&#160&#160&#160&#160</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <Modal id="modal" role="dialog" class="modal fade">
+        <div role="document" class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 id="Modal_Label" class="modal-title">关于我们</h1>
+                </div>
+                <div class="modal-body">
+                    <h4>团队介绍</h4>
+                    <p>&emsp;&emsp;来自于上海财经大学的三个信息人，在19年聚在一起准备用自己所学知识做些贡献。在韩潇老师的指导下，我们决定对传染病进行可视化与预测。在这之后爆发的新冠疫情，我们希望用自己做出的成果对疫情的防治贡献微薄之力。</p>
+                    <hr/>
+                    <h4>项目历程</h4>
+                    <p>&emsp;&emsp;自19年的下半年开始，团队自主学习知识，充实自身，提升能力，并在明确分工之后着手进行项目开发。</p>
+                    <p>在疫情爆发之后团队加紧项目开发的进程：</p>
+                    <ul>
+                        <li>运用 python 进行数据挖掘，爬取数据将应用于模型的建立以及疫情预测；</li>
+                        <li>使用 pandas及sklearn 进行模型建立完成较为准确的疫情预测；</li>
+                        <li>基于 echarts 对预测结果及爬取数据进行可视化 直观展现在地图以及各类图表之上。</li>
+                    </ul>
+                    <p>现如今我们仍在不断地更新优化，使功能更加完善页面更加美观。</p>
+                    <hr/>
+                    <h4>人员构成</h4>
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>人员</th>
+                                <th>专业</th>
+                                <th>职责</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>韩潇（指导老师）</td>
+                                <td>信息管理与电子商务系</td>
+                                <td>思路指导</td>
+                            </tr>
+                            <tr>
+                                <td>王郝东（组长）</td>
+                                <td>电子商务</td>
+                                <td>数据收集</td>
+                            </tr>
+                            <tr>
+                                <td>赖明昊</td>
+                                <td>信息管理与工程</td>
+                                <td>预测模型</td>
+                            </tr>
+                            <tr>
+                                <td>夏逸超</td>
+                                <td>信息管理与工程</td>
+                                <td>可视化&网页开发</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr/>
+                    <h4>申明</h4>
+                    <p>&emsp;&emsp;感谢<a href="https://ncov.dxy.cn/ncovh5/view/pneumonia" target="_Blank">丁香园</a>的疫情知识和数据，以及每一位抗疫前线的白衣天使。
+                        <br/>&emsp;&emsp;在此特地感谢 <a href="https://github.com/BlankerL" target="_Blank">Issac Lin</a> 、<a href="https://covidtracking.com/" target="_Blank">covidtracking</a> 以及<a href="https://www.tianapi.com/" target="_Blank">天行数据</a> 提供的
+                        <a href="https://lab.isaaclin.cn/nCoV/zh" target="_Blank">数据接口</a> ,为项目提供了极大的帮助。</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                </div>
+            </div>
+        </div>
+    </Modal>
+
+    <div class="container">
+        <br>
+        <div class="items"></div>
+        <br>
+    </div>
+    <br>
+    <div id="fixedTools" class="totop position-fixed d-none d-xl-flex" style="right: 24px; bottom: 24px">
+        <button type="button" class="btn btn-light" title="返回顶部">▲</button>
+    </div>
+
+    <footer style="background-color: #1e1e1e10;">
+        <div class="container">
+            <div class="col-md-4" style="color: rgba(0, 0, 0, 0.5);text-align:center;height: 120px;">
+                <div class="col-md-12" style="height: 15px;"></div>
+                <div>
+                    <div class="col-xs-4" style="text-align:center;">
+                        <img class="myImg2" src="img/头像1.jpg" alt="t.k.t">
+                    </div>
+                    <div class="col-xs-4" style="text-align:center;">
+                        <img class="myImg2" src="img/头像2.jpg" alt="lmh">
+                    </div>
+                    <div class="col-xs-4" style="text-align:center;">
+                        <img class="myImg2" src="img/头像3.jpg" alt="cc">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 visible-md visible-lg" style="text-align:center;height: 120px;line-height: 100px;">
+                <div style="border-top:none; border-left:1px solid rgba(0, 0, 0, 0.1); border-right:1px solid rgba(0, 0, 0, 0.1); ">
+                    <a class="footer-logo" href="http://www.shufe.edu.cn/"><img class="myImg" src="img/footer-logo.png" alt="SUFE"></a>
+                </div>
+            </div>
+            <div class="col-md-4" style="color: rgba(0, 0, 0, 0.5);text-align:center;height: 120px;">
+                <div class="visible-md visible-lg" style="height: 15px;"></div>
+                <p>地址：上海市国定路777号 上海财经大学</p>
+                <p>Copyright © 2020 prevents.xyz All Rights Reserved</p>
+                <p style="text-align:center;line-height: 10px;">豫ICP 备20005042号 </p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

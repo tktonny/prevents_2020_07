@@ -1,0 +1,247 @@
+[
+  {
+    "date": "2020-05-13",
+    "ConfirmedCases": 4370263,
+    "Fatalities": 313624
+  },
+  {
+    "date": "2020-05-14",
+    "ConfirmedCases": 4419707,
+    "Fatalities": 319736
+  },
+  {
+    "date": "2020-05-15",
+    "ConfirmedCases": 4467674,
+    "Fatalities": 325831
+  },
+  {
+    "date": "2020-05-16",
+    "ConfirmedCases": 4514173,
+    "Fatalities": 332205
+  },
+  {
+    "date": "2020-05-17",
+    "ConfirmedCases": 4559210,
+    "Fatalities": 338363
+  },
+  {
+    "date": "2020-05-18",
+    "ConfirmedCases": 4602795,
+    "Fatalities": 344160
+  },
+  {
+    "date": "2020-05-19",
+    "ConfirmedCases": 4644943,
+    "Fatalities": 349801
+  },
+  {
+    "date": "2020-05-20",
+    "ConfirmedCases": 4685674,
+    "Fatalities": 355728
+  },
+  {
+    "date": "2020-05-21",
+    "ConfirmedCases": 4725004,
+    "Fatalities": 361645
+  },
+  {
+    "date": "2020-05-22",
+    "ConfirmedCases": 4762948,
+    "Fatalities": 367134
+  },
+  {
+    "date": "2020-05-23",
+    "ConfirmedCases": 4799529,
+    "Fatalities": 372202
+  },
+  {
+    "date": "2020-05-24",
+    "ConfirmedCases": 4834773,
+    "Fatalities": 377276
+  },
+  {
+    "date": "2020-05-25",
+    "ConfirmedCases": 4868706,
+    "Fatalities": 382805
+  },
+  {
+    "date": "2020-05-26",
+    "ConfirmedCases": 4901350,
+    "Fatalities": 388130
+  },
+  {
+    "date": "2020-05-27",
+    "ConfirmedCases": 4932731,
+    "Fatalities": 392932
+  },
+  {
+    "date": "2020-05-28",
+    "ConfirmedCases": 4962877,
+    "Fatalities": 397443
+  },
+  {
+    "date": "2020-05-29",
+    "ConfirmedCases": 4991820,
+    "Fatalities": 402313
+  },
+  {
+    "date": "2020-05-30",
+    "ConfirmedCases": 5019586,
+    "Fatalities": 407228
+  },
+  {
+    "date": "2020-05-31",
+    "ConfirmedCases": 5046205,
+    "Fatalities": 411701
+  },
+  {
+    "date": "2020-06-01",
+    "ConfirmedCases": 5071707,
+    "Fatalities": 415777
+  },
+  {
+    "date": "2020-06-02",
+    "ConfirmedCases": 5096123,
+    "Fatalities": 419974
+  },
+  {
+    "date": "2020-06-03",
+    "ConfirmedCases": 5119486,
+    "Fatalities": 424454
+  },
+  {
+    "date": "2020-06-04",
+    "ConfirmedCases": 5141825,
+    "Fatalities": 428604
+  },
+  {
+    "date": "2020-06-05",
+    "ConfirmedCases": 5163171,
+    "Fatalities": 432261
+  },
+  {
+    "date": "2020-06-06",
+    "ConfirmedCases": 5183554,
+    "Fatalities": 435743
+  },
+  {
+    "date": "2020-06-07",
+    "ConfirmedCases": 5203009,
+    "Fatalities": 439668
+  },
+  {
+    "date": "2020-06-08",
+    "ConfirmedCases": 5221566,
+    "Fatalities": 443587
+  },
+  {
+    "date": "2020-06-09",
+    "ConfirmedCases": 5239252,
+    "Fatalities": 446970
+  },
+  {
+    "date": "2020-06-10",
+    "ConfirmedCases": 5256100,
+    "Fatalities": 449879
+  },
+  {
+    "date": "2020-06-11",
+    "ConfirmedCases": 5272140,
+    "Fatalities": 452947
+  },
+  {
+    "date": "2020-06-12",
+    "ConfirmedCases": 5287403,
+    "Fatalities": 456536
+  },
+  {
+    "date": "2020-06-13",
+    "ConfirmedCases": 5301917,
+    "Fatalities": 459784
+  },
+  {
+    "date": "2020-06-14",
+    "ConfirmedCases": 5315709,
+    "Fatalities": 462404
+  },
+  {
+    "date": "2020-06-15",
+    "ConfirmedCases": 5328809,
+    "Fatalities": 464781
+  },
+  {
+    "date": "2020-06-16",
+    "ConfirmedCases": 5341245,
+    "Fatalities": 467743
+  },
+  {
+    "date": "2020-06-17",
+    "ConfirmedCases": 5353044,
+    "Fatalities": 470730
+  },
+  {
+    "date": "2020-06-18",
+    "ConfirmedCases": 5364232,
+    "Fatalities": 473180
+  },
+  {
+    "date": "2020-06-19",
+    "ConfirmedCases": 5374834,
+    "Fatalities": 475221
+  },
+  {
+    "date": "2020-06-20",
+    "ConfirmedCases": 5384876,
+    "Fatalities": 477573
+  },
+  {
+    "date": "2020-06-21",
+    "ConfirmedCases": 5394383,
+    "Fatalities": 480168
+  },
+  {
+    "date": "2020-06-22",
+    "ConfirmedCases": 5403377,
+    "Fatalities": 482380
+  },
+  {
+    "date": "2020-06-23",
+    "ConfirmedCases": 5411882,
+    "Fatalities": 484175
+  },
+  {
+    "date": "2020-06-24",
+    "ConfirmedCases": 5419921,
+    "Fatalities": 486032
+  },
+  {
+    "date": "2020-06-25",
+    "ConfirmedCases": 5427516,
+    "Fatalities": 488261
+  },
+  {
+    "date": "2020-06-26",
+    "ConfirmedCases": 5434686,
+    "Fatalities": 490250
+  },
+  {
+    "date": "2020-06-27",
+    "ConfirmedCases": 5441452,
+    "Fatalities": 491807
+  },
+  {
+    "date": "2020-06-28",
+    "ConfirmedCases": 5447833,
+    "Fatalities": 493202
+  },
+  {
+    "date": "2020-06-29",
+    "ConfirmedCases": 5453850,
+    "Fatalities": 494934
+  },
+  {
+    "date": "2020-06-30",
+    "ConfirmedCases": 5459519,
+    "Fatalities": 496579
+  }
+]

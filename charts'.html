@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>疫情图表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description" content="疫情预测-疫情地图-2019-nCov">
+    <meta name="keywords" content="2020 wuhan Novel coronavirus, 武汉肺炎, geo, charts, 地图,疫情,疫情可视化,疫情预测, 2019-nCov, free,2019-nCoV, coronavirus, novel, visualization, map, china, wuhan, heatmap,wh">
+    <meta name="author" content="Tony Xia">
+    <link rel="icon" href="img/sufe.ico" type="images/x-ico" />
+    <link rel="stylesheet" type="text/css" href="css/head.css">
+    <link rel="stylesheet" type="text/css" href="./css/common.css" />
+    <link rel="stylesheet" type="text/css" href="./js/zui/css/zui-theme.css" />
+    <link rel="stylesheet" type="text/css" href="./js/zui/css/zui.css" />
+    <link rel="stylesheet" type="text/css" href="./js/zui/lib/chosen/chosen.min.css" />
+    <script src="https://cdn.bootcss.com/echarts/4.4.0-rc.1/echarts.min.js"></script>
+    <script src="incubator-echarts-4.6.0/map/js/china.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="js/charts_chart3.js"></script>
+    <script src="js/charts_chart4.js"></script>
+    <script src="js/charts_chart5.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <hr/>
+        <div class="chart" id="trend-chart" style="height: 30rem"></div>
+        <hr/>
+        <div class="chart" id="add-chart" style="height: 30rem"></div>
+        <hr/>
+        <div class="chart" id="R3" style="width: 100%; height: 30rem"></div>
+        <hr/>
+        <div class="chart" id="R4" style="width: 100%; height: 30rem"></div>
+        <hr/>
+        <div class="chart" id="R5" style="width: 100%; height: 63rem;"></div>
+        <hr/>
+        <div class="chart" id="R6" style="width: 100%; height: 134rem"></div>
+        <hr/>
+    </div>
+    <script>
+        var dataUrl_overall = "/data/Overall-TimeSeries-20200513.json";
+        var dataUrlBackup_overall = "http://api.tianapi.com/txapi/ncov/index?key=51ada08c82189b4e519e27149e77e6fd&date=all";
+
+        var orderTraceContainer1 = echarts.init(document.getElementById('trend-chart'));
+        orderTraceContainer1.showLoading({
+            text: '加载中...',
+            effect: 'whirling'
+        });
+        var orderTraceContainer2 = echarts.init(document.getElementById('add-chart'));
+        orderTraceContainer2.showLoading({
+            text: '加载中...',
+            effect: 'whirling'
+        });
+        var myChart3 = echarts.init(document.getElementById('R6'));
+        myChart3.showLoading({
+            text: '加载中...',
+            effect: 'whirling'
+        });
+        $(document).ready(function() {
+            initChart_all();
+        });
+
+        var initChart_all = function() {
+            $.ajax({
+                url: dataUrl_overall,
+                type: 'get',
+                success: function(data) {
+                    if (data.success == "true") {
+                        var chartData = data.results;
+                        var date = [];
+                        var dataNCoV = [];
+                        var confirmedNCoV = [];
+                        var suspectedNCoV = [];
+                        var curedNCoV = [];
+                        var deadNCoV = [];
+                        var patientNCoV = [];
+
+                        dataNCoV['2020/1/24'] = {
+                            "confirm": 897,
+                            "suspect": 1076,
+                            "cure": 36,
+                            "dead": 26,
+                            "patient": 897 - 36 - 26
+                        };
+                        dataNCoV['2020/1/25'] = {
+                            "confirm": 1408,
+                            "suspect": 2032,
+                            "cure": 39,
+                            "dead": 42,
+                            "patient": 1408 - 39 - 42
+                        };
+                        dataNCoV['2020/1/26'] = {
+                            "confirm": 2076,
+                            "suspect": 2692,
+                            "cure": 49,
+                            "dead": 56,
+                            "patient": 2076 - 49 - 56
+                        };
+                        dataNCoV['2020/1/27'] = {
+                            "confirm": 2857,
+                            "suspect": 5794,
+                            "cure": 56,
+                            "dead": 82,
+                            "patient": 2857 - 56 - 82
+                        };
+                        dataNCoV['2020/1/28'] = {
+                            "confirm": 4630,
+                            "suspect": 6973,
+                            "cure": 73,
+                            "dead": 106,
+                            "patient": 4630 - 73 - 106
+                        };
+                        dataNCoV['2020/1/29'] = {
+                            "confirm": 6095,
+                            "suspect": 9239,
+                            "cure": 119,
+                            "dead": 133,
+                            "patient": 6095 - 119 - 133
+                        };
+                        dataNCoV['2020/1/30'] = {
+                            "confirm": 8149,
+                            "suspect": 12167,
+                            "cure": 135,
+                            "dead": 171,
+                            "patient": 8149 - 135 - 171
+                        };
+                        dataNCoV['2020/1/31'] = {
+                            "confirm": 9811,
+                            "suspect": 15238,
+                            "cure": 211,
+                            "dead": 213,
+                            "patient": 9811 - 211 - 213
+                        };
+                        dataNCoV['2020/2/01'] = {
+                            "confirm": 11901,
+                            "suspect": 17988,
+                            "cure": 275,
+                            "dead": 259,
+                            "patient": 11901 - 275 - 259
+                        };
+                        dataNCoV['2020/2/02'] = {
+                            "confirm": 14490,
+                            "suspect": 19544,
+                            "cure": 434,
+                            "dead": 304,
+                            "patient": 14490 - 434 - 304
+                        };
+                        dataNCoV['2020/2/03'] = {
+                            "confirm": 17341,
+                            "suspect": 21558,
+                            "cure": 527,
+                            "dead": 361,
+                            "patient": 17341 - 527 - 361
+                        };
+                        dataNCoV['2020/2/04'] = {
+                            "confirm": 20530,
+                            "suspect": 23214,
+                            "cure": 718,
+                            "dead": 426,
+                            "patient": 20530 - 718 - 426
+                        };
+                        dataNCoV['2020/2/05'] = {
+                            "confirm": 24434,
+                            "suspect": 23260,
+                            "cure": 1018,
+                            "dead": 493,
+                            "patient": 24434 - 1018 - 493
+                        };
+                        dataNCoV['2020/2/06'] = {
+                            "confirm": 28138,
+                            "suspect": 24702,
+                            "cure": 1373,
+                            "dead": 564,
+                            "patient": 28138 - 1373 - 564
+                        };
+                        dataNCoV['2020/2/07'] = {
+                            "confirm": 31264,
+                            "suspect": 26359,
+                            "cure": 1753,
+                            "dead": 637,
+                            "patient": 31264 - 1753 - 637
+                        };
+                        dataNCoV['2020/2/08'] = {
+                            "confirm": 34673,
+                            "suspect": 27657,
+                            "cure": 2375,
+                            "dead": 724,
+                            "patient": 34673 - 2375 - 724
+                        };
+                        dataNCoV['2020/2/09'] = {
+                            "confirm": 37289,
+                            "suspect": 28942,
+                            "cure": 2900,
+                            "dead": 813,
+                            "patient": 37289 - 2900 - 813
+                        };
+                        dataNCoV['2020/2/10'] = {
+                            "confirm": 40262,
+                            "suspect": 23589,
+                            "cure": 3551,
+                            "dead": 909,
+                            "patient": 40262 - 3551 - 909
+                        };
+                        dataNCoV['2020/2/11'] = {
+                            "confirm": 42747,
+                            "suspect": 21675,
+                            "cure": 4301,
+                            "dead": 1017,
+                            "patient": 42747 - 4301 - 1017
+                        };
+                        console.log(dataNCoV)
+                        for (var i in chartData) {
+                            var dataTime = new Date(chartData[i].updateTime);
+                            var showTime = [dataTime.getFullYear(), dataTime.getMonth() + 1, ("0" + dataTime.getDate()).slice(-2)].join('/');
+                            var confirmedCount = chartData[i].confirmedCount ? chartData[i].confirmedCount : chartData[i].confirmed;
+                            var suspectedCount = chartData[i].suspectedCount ? chartData[i].suspectedCount : chartData[i].suspectedCount;
+                            var curedCount = chartData[i].curedCount ? chartData[i].curedCount : chartData[i].curedCount;
+                            var deadCount = chartData[i].deadCount ? chartData[i].deadCount : chartData[i].deadCount;
+
+                            if (!dataNCoV[showTime] || dataNCoV[showTime]['confirm'] < confirmedCount) {
+                                dataNCoV[showTime] = [];
+                                dataNCoV[showTime]['confirm'] = confirmedCount;
+                                dataNCoV[showTime]['suspect'] = suspectedCount;
+                                dataNCoV[showTime]['cure'] = curedCount;
+                                dataNCoV[showTime]['dead'] = deadCount;
+                            }
+                        }
+                        //console.log(dataNCoV);
+
+                        // 时间排序
+                        const dataNCoVOrdered1 = {};
+                        Object.keys(dataNCoV).sort(function(a, b) {
+                            a = a.split('/').join('');
+                            b = b.split('/').join('');
+                            return a > b ? 1 : a < b ? -1 : 0;
+                        }).forEach(function(key) {
+                            dataNCoVOrdered1[key] = dataNCoV[key];
+                        });
+
+                        // use data
+                        for (var i in dataNCoVOrdered1) {
+
+                            var t = new Date(i);
+                            t.setDate(t.getDate() - 1);
+                            var yesterday = [t.getFullYear(), t.getMonth() + 1, ("0" + t.getDate()).slice(-2)].join('/');
+                            if (!dataNCoVOrdered1[yesterday]) {
+                                continue;
+                            }
+
+                            date.push(i);
+                            confirmedNCoV.push(dataNCoVOrdered1[i]['confirm'] - dataNCoVOrdered1[yesterday]['confirm']);
+                            suspectedNCoV.push(dataNCoVOrdered1[i]['suspect'] - dataNCoVOrdered1[yesterday]['suspect']);
+                            curedNCoV.push(dataNCoVOrdered1[i]['cure'] - dataNCoVOrdered1[yesterday]['cure']);
+                            deadNCoV.push(dataNCoVOrdered1[i]['dead'] - dataNCoVOrdered1[yesterday]['dead']);
+                        }
+
+                        initDetailChart2(date, confirmedNCoV, suspectedNCoV, curedNCoV, deadNCoV);
+
+                        var date = [];
+                        var dataNCoV = [];
+                        var confirmedNCoV = [];
+                        var suspectedNCoV = [];
+                        var curedNCoV = [];
+                        var deadNCoV = [];
+                        var patientNCoV = [];
+
+                        dataNCoV['2020/1/24'] = {
+                            "confirm": 897,
+                            "suspect": 1076,
+                            "cure": 36,
+                            "dead": 26,
+                            "patient": 897 - 36 - 26
+                        };
+                        dataNCoV['2020/1/25'] = {
+                            "confirm": 1408,
+                            "suspect": 2032,
+                            "cure": 39,
+                            "dead": 42,
+                            "patient": 1408 - 39 - 42
+                        };
+                        dataNCoV['2020/1/26'] = {
+                            "confirm": 2076,
+                            "suspect": 2692,
+                            "cure": 49,
+                            "dead": 56,
+                            "patient": 2076 - 49 - 56
+                        };
+                        dataNCoV['2020/1/27'] = {
+                            "confirm": 2857,
+                            "suspect": 5794,
+                            "cure": 56,
+                            "dead": 82,
+                            "patient": 2857 - 56 - 82
+                        };
+                        dataNCoV['2020/1/28'] = {
+                            "confirm": 4630,
+                            "suspect": 6973,
+                            "cure": 73,
+                            "dead": 106,
+                            "patient": 4630 - 73 - 106
+                        };
+                        dataNCoV['2020/1/29'] = {
+                            "confirm": 6095,
+                            "suspect": 9239,
+                            "cure": 119,
+                            "dead": 133,
+                            "patient": 6095 - 119 - 133
+                        };
+                        dataNCoV['2020/1/30'] = {
+                            "confirm": 8149,
+                            "suspect": 12167,
+                            "cure": 135,
+                            "dead": 171,
+                            "patient": 8149 - 135 - 171
+                        };
+                        dataNCoV['2020/1/31'] = {
+                            "confirm": 9811,
+                            "suspect": 15238,
+                            "cure": 211,
+                            "dead": 213,
+                            "patient": 9811 - 211 - 213
+                        };
+                        dataNCoV['2020/2/01'] = {
+                            "confirm": 11901,
+                            "suspect": 17988,
+                            "cure": 275,
+                            "dead": 259,
+                            "patient": 11901 - 275 - 259
+                        };
+                        dataNCoV['2020/2/02'] = {
+                            "confirm": 14490,
+                            "suspect": 19544,
+                            "cure": 434,
+                            "dead": 304,
+                            "patient": 14490 - 434 - 304
+                        };
+                        dataNCoV['2020/2/03'] = {
+                            "confirm": 17341,
+                            "suspect": 21558,
+                            "cure": 527,
+                            "dead": 361,
+                            "patient": 17341 - 527 - 361
+                        };
+                        dataNCoV['2020/2/04'] = {
+                            "confirm": 20530,
+                            "suspect": 23214,
+                            "cure": 718,
+                            "dead": 426,
+                            "patient": 20530 - 718 - 426
+                        };
+                        dataNCoV['2020/2/05'] = {
+                            "confirm": 24434,
+                            "suspect": 23260,
+                            "cure": 1018,
+                            "dead": 493,
+                            "patient": 24434 - 1018 - 493
+                        };
+                        dataNCoV['2020/2/06'] = {
+                            "confirm": 28138,
+                            "suspect": 24702,
+                            "cure": 1373,
+                            "dead": 564,
+                            "patient": 28138 - 1373 - 564
+                        };
+                        dataNCoV['2020/2/07'] = {
+                            "confirm": 31264,
+                            "suspect": 26359,
+                            "cure": 1753,
+                            "dead": 637,
+                            "patient": 31264 - 1753 - 637
+                        };
+                        dataNCoV['2020/2/08'] = {
+                            "confirm": 34673,
+                            "suspect": 27657,
+                            "cure": 2375,
+                            "dead": 724,
+                            "patient": 34673 - 2375 - 724
+                        };
+                        dataNCoV['2020/2/09'] = {
+                            "confirm": 37289,
+                            "suspect": 28942,
+                            "cure": 2900,
+                            "dead": 813,
+                            "patient": 37289 - 2900 - 813
+                        };
+                        dataNCoV['2020/2/10'] = {
+                            "confirm": 40262,
+                            "suspect": 23589,
+                            "cure": 3551,
+                            "dead": 909,
+                            "patient": 40262 - 3551 - 909
+                        };
+                        dataNCoV['2020/2/11'] = {
+                            "confirm": 42747,
+                            "suspect": 21675,
+                            "cure": 4301,
+                            "dead": 1017,
+                            "patient": 42747 - 4301 - 1017
+                        };
+
+                        for (var i in chartData) {
+                            var dataTime = new Date(chartData[i].updateTime);
+                            var showTime = [dataTime.getFullYear(), dataTime.getMonth() + 1, ("0" + dataTime.getDate()).slice(-2)].join('/');
+                            var confirmedCount = chartData[i].confirmedCount ? chartData[i].confirmedCount : chartData[i].confirmed;
+                            var suspectedCount = chartData[i].suspectedCount ? chartData[i].suspectedCount : chartData[i].suspectedCount;
+                            var curedCount = chartData[i].curedCount ? chartData[i].curedCount : chartData[i].curedCount;
+                            var deadCount = chartData[i].deadCount ? chartData[i].deadCount : chartData[i].deadCount;
+                            var patientCount = chartData[i].currentConfirmedCount ? chartData[i].currentConfirmedCount : (confirmedCount - curedCount - deadCount);
+                            if (!dataNCoV[showTime] || dataNCoV[showTime]['confirm'] < confirmedCount) {
+                                dataNCoV[showTime] = [];
+                                dataNCoV[showTime]['confirm'] = confirmedCount;
+                                dataNCoV[showTime]['suspect'] = suspectedCount;
+                                dataNCoV[showTime]['cure'] = curedCount;
+                                dataNCoV[showTime]['dead'] = deadCount;
+                                dataNCoV[showTime]['patient'] = patientCount;
+                            }
+                        }
+
+                        // 时间排序
+                        const dataNCoVOrdered2 = {};
+                        Object.keys(dataNCoV).sort((function(a, b) {
+                            a = a.split('/').join('');
+                            b = b.split('/').join('');
+                            return a > b ? 1 : a < b ? -1 : 0;
+                        })).forEach(function(key) {
+                            dataNCoVOrdered2[key] = dataNCoV[key];
+                        });
+
+
+                        // use data
+                        for (var i in dataNCoVOrdered2) {
+                            date.push(i);
+                            confirmedNCoV.push(dataNCoVOrdered2[i]['confirm']);
+                            suspectedNCoV.push(dataNCoVOrdered2[i]['suspect']);
+                            curedNCoV.push(dataNCoVOrdered2[i]['cure']);
+                            deadNCoV.push(dataNCoVOrdered2[i]['dead']);
+                            patientNCoV.push(dataNCoVOrdered2[i]['patient']);
+                        }
+
+                        initDetailChart1(date, confirmedNCoV, suspectedNCoV, curedNCoV, deadNCoV, patientNCoV);
+
+                        var datalist = [];
+                        var date = [];
+                        var dataNCoV = [];
+                        var confirmedNCoV = [];
+                        var curedNCoV = [];
+                        var deadNCoV = [];
+                        var patientNCoV = [];
+
+                        dataNCoV['2020/1/24'] = {
+                            "confirm": 897,
+                            "suspect": 1076,
+                            "cure": 36,
+                            "dead": 26,
+                            "patient": 897 - 36 - 26
+                        };
+                        dataNCoV['2020/1/25'] = {
+                            "confirm": 1408,
+                            "suspect": 2032,
+                            "cure": 39,
+                            "dead": 42,
+                            "patient": 1408 - 39 - 42
+                        };
+                        dataNCoV['2020/1/26'] = {
+                            "confirm": 2076,
+                            "suspect": 2692,
+                            "cure": 49,
+                            "dead": 56,
+                            "patient": 2076 - 49 - 56
+                        };
+                        dataNCoV['2020/1/27'] = {
+                            "confirm": 2857,
+                            "suspect": 5794,
+                            "cure": 56,
+                            "dead": 82,
+                            "patient": 2857 - 56 - 82
+                        };
+                        dataNCoV['2020/1/28'] = {
+                            "confirm": 4630,
+                            "suspect": 6973,
+                            "cure": 73,
+                            "dead": 106,
+                            "patient": 4630 - 73 - 106
+                        };
+                        dataNCoV['2020/1/29'] = {
+                            "confirm": 6095,
+                            "suspect": 9239,
+                            "cure": 119,
+                            "dead": 133,
+                            "patient": 6095 - 119 - 133
+                        };
+                        dataNCoV['2020/1/30'] = {
+                            "confirm": 8149,
+                            "suspect": 12167,
+                            "cure": 135,
+                            "dead": 171,
+                            "patient": 8149 - 135 - 171
+                        };
+                        dataNCoV['2020/1/31'] = {
+                            "confirm": 9811,
+                            "suspect": 15238,
+                            "cure": 211,
+                            "dead": 213,
+                            "patient": 9811 - 211 - 213
+                        };
+                        dataNCoV['2020/2/01'] = {
+                            "confirm": 11901,
+                            "suspect": 17988,
+                            "cure": 275,
+                            "dead": 259,
+                            "patient": 11901 - 275 - 259
+                        };
+                        dataNCoV['2020/2/02'] = {
+                            "confirm": 14490,
+                            "suspect": 19544,
+                            "cure": 434,
+                            "dead": 304,
+                            "patient": 14490 - 434 - 304
+                        };
+                        dataNCoV['2020/2/03'] = {
+                            "confirm": 17341,
+                            "suspect": 21558,
+                            "cure": 527,
+                            "dead": 361,
+                            "patient": 17341 - 527 - 361
+                        };
+                        dataNCoV['2020/2/04'] = {
+                            "confirm": 20530,
+                            "suspect": 23214,
+                            "cure": 718,
+                            "dead": 426,
+                            "patient": 20530 - 718 - 426
+                        };
+                        dataNCoV['2020/2/05'] = {
+                            "confirm": 24434,
+                            "suspect": 23260,
+                            "cure": 1018,
+                            "dead": 493,
+                            "patient": 24434 - 1018 - 493
+                        };
+                        dataNCoV['2020/2/06'] = {
+                            "confirm": 28138,
+                            "suspect": 24702,
+                            "cure": 1373,
+                            "dead": 564,
+                            "patient": 28138 - 1373 - 564
+                        };
+                        dataNCoV['2020/2/07'] = {
+                            "confirm": 31264,
+                            "suspect": 26359,
+                            "cure": 1753,
+                            "dead": 637,
+                            "patient": 31264 - 1753 - 637
+                        };
+                        dataNCoV['2020/2/08'] = {
+                            "confirm": 34673,
+                            "suspect": 27657,
+                            "cure": 2375,
+                            "dead": 724,
+                            "patient": 34673 - 2375 - 724
+                        };
+                        dataNCoV['2020/2/09'] = {
+                            "confirm": 37289,
+                            "suspect": 28942,
+                            "cure": 2900,
+                            "dead": 813,
+                            "patient": 37289 - 2900 - 813
+                        };
+                        dataNCoV['2020/2/10'] = {
+                            "confirm": 40262,
+                            "suspect": 23589,
+                            "cure": 3551,
+                            "dead": 909,
+                            "patient": 40262 - 3551 - 909
+                        };
+                        dataNCoV['2020/2/11'] = {
+                            "confirm": 42747,
+                            "suspect": 21675,
+                            "cure": 4301,
+                            "dead": 1017,
+                            "patient": 42747 - 4301 - 1017
+                        };
+
+                        for (var i in chartData) {
+                            var dataTime = new Date(chartData[i].updateTime);
+                            var showTime = [dataTime.getFullYear(), dataTime.getMonth() + 1, ("0" + dataTime.getDate()).slice(-2)].join('/');
+                            var confirmedCount = chartData[i].confirmedCount ? chartData[i].confirmedCount : chartData[i].confirmed;
+                            var suspectedCount = chartData[i].suspectedCount ? chartData[i].suspectedCount : chartData[i].suspectedCount;
+                            var curedCount = chartData[i].curedCount ? chartData[i].curedCount : chartData[i].curedCount;
+                            var deadCount = chartData[i].deadCount ? chartData[i].deadCount : chartData[i].deadCount;
+
+                            if (!dataNCoV[showTime] || dataNCoV[showTime]['confirm'] < confirmedCount) {
+                                dataNCoV[showTime] = [];
+                                dataNCoV[showTime]['confirm'] = confirmedCount;
+                                dataNCoV[showTime]['suspect'] = suspectedCount;
+                                dataNCoV[showTime]['cure'] = curedCount;
+                                dataNCoV[showTime]['dead'] = deadCount;
+                                dataNCoV[showTime]['patient'] = confirmedCount - curedCount - deadCount;
+                            }
+
+                        }
+
+                        // 时间排序
+                        const dataNCoVOrdered3 = {};
+                        Object.keys(dataNCoV).sort((function(a, b) {
+                            a = a.split('/').join('');
+                            b = b.split('/').join('');
+                            return a > b ? 1 : a < b ? -1 : 0;
+                        })).forEach(function(key) {
+                            dataNCoVOrdered3[key] = dataNCoV[key];
+                        });
+
+
+                        // use data
+                        for (var i in dataNCoVOrdered3) {
+
+                            var t = new Date(i);
+                            t.setDate(t.getDate() - 1);
+                            var yesterday = [t.getFullYear(), t.getMonth() + 1, ("0" + t.getDate()).slice(-2)].join('/');
+                            if (!dataNCoVOrdered3[yesterday]) {
+                                continue;
+                            }
+
+                            date.push(i);
+                            confirmedNCoV.push(dataNCoVOrdered3[i]['confirm'] - dataNCoVOrdered3[yesterday]['confirm']);
+                            var tem = dataNCoVOrdered3[i]['cure'] - dataNCoVOrdered3[yesterday]['cure'];
+                            if (tem >= 0) {
+                                curedNCoV.push(tem);
+                            }
+                            if (tem < 0) {
+                                curedNCoV.push(0);
+                            }
+                            deadNCoV.push(dataNCoVOrdered3[i]['dead'] - dataNCoVOrdered3[yesterday]['dead']);
+                            patientNCoV.push(dataNCoVOrdered3[i]['patient']);
+                        }
+
+                        for (var i in date) {
+                            if (i > 0) {
+                                var confirm = confirmedNCoV[i];
+                                var cure = curedNCoV[i];
+                                var dead = deadNCoV[i];
+                                var p = patientNCoV[i];
+                                datalist[i - 1] = [
+                                    confirm,
+                                    cure,
+                                    dead,
+                                    p,
+                                    0,
+                                ]
+                            }
+                        }
+
+                        initChart4(datalist);
+                        return;
+                    }
+                    alert("获取数据失败");
+                },
+                error: function(data) {
+                    console.log("err")
+                }
+            });
+        }
+
+        var initDetailChart1 = function(date, confirmedNCoV, suspectedNCoV, curedNCoV, deadNCoV, patientNCoV) {
+            echartsOption1 = {
+                title: {
+                    text: '疫情累计趋势',
+                    textStyle: {
+                        fontWeight: 'normal',
+                        color: '#123555'
+                    },
+                    left: '0px'
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        lineStyle: {
+                            color: '#57617B'
+                        }
+                    }
+                },
+                legend: {
+                    itemGap: 1,
+                    top: 30,
+                    data: ['确诊', '疑似', '治愈', '死亡', '存量'],
+                    right: '2%',
+                    textStyle: {
+                        fontSize: 12,
+                        color: '#123555'
+                    }
+                },
+                grid: {
+                    left: '0%',
+                    right: '0%',
+                    bottom: '7%',
+                    containLabel: true
+                },
+                xAxis: [{
+                    type: 'category',
+                    boundaryGap: false,
+                    axisLine: {
+                        lineStyle: {
+                            color: '#57617B'
+                        }
+                    },
+                    data: date
+                }],
+                yAxis: [{
+                    type: 'value',
+                    axisTick: {
+                        show: false
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: 'gray'
+                        }
+                    },
+                    axisLabel: {
+                        margin: 4,
+                        textStyle: {
+                            fontSize: 8
+                        }
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#57617B'
+                        }
+                    }
+                }],
+                dataZoom: [{
+                    type: 'slider',
+                    show: true,
+                    xAxisIndex: [0],
+                }, {
+                    type: 'inside',
+                    xAxisIndex: [0],
+                }, ],
+                series: [{
+                    name: '确诊',
+                    type: 'line',
+                    smooth: true,
+                    symbol: 'circle',
+                    symbolSize: 5,
+                    showSymbol: true,
+                    lineStyle: {
+                        normal: {
+                            width: 1
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgba(137, 189, 27, 0.8)'
+                            }, {
+                                offset: 0.8,
+                                color: 'rgba(137, 189, 27, 0)'
+                            }], false),
+                            shadowColor: 'rgba(0, 0, 0, 0.1)',
+                            shadowBlur: 10
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#f1a325',
+                            borderColor: 'rgba(137,189,2,0.27)',
+                            borderWidth: 12
+                        }
+                    },
+                    data: confirmedNCoV
+                }, {
+                    name: '治愈',
+                    type: 'line',
+                    smooth: true,
+                    symbol: 'circle',
+                    symbolSize: 5,
+                    showSymbol: false,
+                    lineStyle: {
+                        normal: {
+                            width: 1
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgba(0, 136, 212, 0.8)'
+                            }, {
+                                offset: 0.8,
+                                color: 'rgba(0, 136, 212, 0)'
+                            }], false),
+                            shadowColor: 'rgba(0, 0, 0, 0.1)',
+                            shadowBlur: 10
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#38b03f',
+                            borderColor: 'rgba(0,136,212,0.2)',
+                            borderWidth: 12
+
+                        }
+                    },
+                    data: curedNCoV
+                }, {
+                    name: '疑似',
+                    type: 'line',
+                    smooth: true,
+                    symbol: 'circle',
+                    symbolSize: 5,
+                    showSymbol: false,
+                    lineStyle: {
+                        normal: {
+                            width: 1
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgba(0, 136, 212, 0.8)'
+                            }, {
+                                offset: 0.8,
+                                color: 'rgba(0, 136, 212, 0)'
+                            }], false),
+                            shadowColor: 'rgba(0, 0, 0, 0.1)',
+                            shadowBlur: 10
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#123555',
+                            borderColor: 'rgba(0,136,212,0.2)',
+                            borderWidth: 12
+
+                        }
+                    },
+                    data: suspectedNCoV
+                }, {
+                    name: '死亡',
+                    type: 'line',
+                    smooth: true,
+                    symbol: 'circle',
+                    symbolSize: 5,
+                    showSymbol: false,
+                    lineStyle: {
+                        normal: {
+                            width: 1
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgba(0, 136, 212, 0.8)'
+                            }, {
+                                offset: 0.8,
+                                color: 'rgba(0, 136, 212, 0)'
+                            }], false),
+                            shadowColor: 'rgba(0, 0, 0, 0.1)',
+                            shadowBlur: 10
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#ea644a',
+                            borderColor: 'rgba(0,136,212,0.2)',
+                            borderWidth: 12
+
+                        }
+                    },
+                    data: deadNCoV
+                }, {
+                    name: '存量',
+                    type: 'bar',
+                    barWidth: 6,
+                    data: patientNCoV,
+                    itemStyle: {
+                        normal: {
+                            barBorderRadius: 5,
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: '#c62828'
+                                }, {
+                                    offset: 1,
+                                    color: '#ffcdd2'
+                                }]
+                            )
+                        },
+                    },
+                    emphasis: {
+                        itemStyle: {
+                            color: 'red'
+                        },
+                        borderWidth: 20
+                    }
+                }]
+            };
+            orderTraceContainer1.hideLoading();
+            orderTraceContainer1.setOption(echartsOption1);
+        }
+
+        var initDetailChart2 = function(date, confirmedNCoV, suspectedNCoV, curedNCoV, deadNCoV) {
+            echartsOption2 = {
+                title: {
+                    text: '新增确诊/疑似/治愈/死亡 趋势',
+                    textStyle: {
+                        fontWeight: 'normal',
+                        color: '#123555'
+                    },
+                    left: '0px'
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        lineStyle: {
+                            color: '#57617B'
+                        }
+                    }
+                },
+                legend: {
+                    itemGap: 1,
+                    top: 30,
+                    data: ['确诊', '疑似', '治愈', '死亡'],
+                    right: '2%',
+                    textStyle: {
+                        fontSize: 12,
+                        color: '#123555'
+                    }
+                },
+                grid: {
+                    left: '0%',
+                    right: '0%',
+                    bottom: '7%',
+                    containLabel: true
+                },
+                xAxis: [{
+                    type: 'category',
+                    boundaryGap: false,
+                    axisLine: {
+                        lineStyle: {
+                            color: '#57617B'
+                        }
+                    },
+                    data: date
+                }],
+                yAxis: [{
+                    type: 'value',
+                    axisTick: {
+                        show: false
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: 'gray'
+                        }
+                    },
+                    axisLabel: {
+                        margin: 4,
+                        textStyle: {
+                            fontSize: 8
+                        }
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#57617B'
+                        }
+                    }
+                }],
+                dataZoom: [{
+                    type: 'slider',
+                    show: true,
+                    xAxisIndex: [0],
+                }, {
+                    type: 'inside',
+                    xAxisIndex: [0],
+                }, ],
+                series: [{
+                    name: '确诊',
+                    type: 'line',
+                    smooth: false,
+                    symbol: 'circle',
+                    symbolSize: 5,
+                    showSymbol: true,
+                    lineStyle: {
+                        normal: {
+                            width: 1
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgba(137, 189, 27, 0.8)'
+                            }, {
+                                offset: 0.8,
+                                color: 'rgba(137, 189, 27, 0)'
+                            }], false),
+                            shadowColor: 'rgba(0, 0, 0, 0.1)',
+                            shadowBlur: 10
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#f1a325',
+                            borderColor: 'rgba(137,189,2,0.27)',
+                            borderWidth: 12
+                        }
+                    },
+                    data: confirmedNCoV
+                }, {
+                    name: '治愈',
+                    type: 'line',
+                    smooth: false,
+                    symbol: 'circle',
+                    symbolSize: 5,
+                    showSymbol: false,
+                    lineStyle: {
+                        normal: {
+                            width: 1
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgba(0, 136, 212, 0.8)'
+                            }, {
+                                offset: 0.8,
+                                color: 'rgba(0, 136, 212, 0)'
+                            }], false),
+                            shadowColor: 'rgba(0, 0, 0, 0.1)',
+                            shadowBlur: 10
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#38b03f',
+                            borderColor: 'rgba(0,136,212,0.2)',
+                            borderWidth: 12
+
+                        }
+                    },
+                    data: curedNCoV
+                }, {
+                    name: '疑似',
+                    type: 'line',
+                    smooth: false,
+                    symbol: 'circle',
+                    symbolSize: 5,
+                    showSymbol: true,
+                    lineStyle: {
+                        normal: {
+                            width: 1
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgba(0, 136, 212, 0.8)'
+                            }, {
+                                offset: 0.8,
+                                color: 'rgba(0, 136, 212, 0)'
+                            }], false),
+                            shadowColor: 'rgba(0, 0, 0, 0.1)',
+                            shadowBlur: 10
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#123555',
+                            borderColor: 'rgba(0,136,212,0.2)',
+                            borderWidth: 12
+
+                        }
+                    },
+                    data: suspectedNCoV
+                }, {
+                    name: '死亡',
+                    type: 'line',
+                    smooth: false,
+                    symbol: 'circle',
+                    symbolSize: 5,
+                    showSymbol: false,
+                    lineStyle: {
+                        normal: {
+                            width: 1
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgba(0, 136, 212, 0.8)'
+                            }, {
+                                offset: 0.8,
+                                color: 'rgba(0, 136, 212, 0)'
+                            }], false),
+                            shadowColor: 'rgba(0, 0, 0, 0.1)',
+                            shadowBlur: 10
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#ea644a',
+                            borderColor: 'rgba(0,136,212,0.2)',
+                            borderWidth: 12
+
+                        }
+                    },
+                    data: deadNCoV
+                }]
+            };
+            orderTraceContainer2.hideLoading();
+            orderTraceContainer2.setOption(echartsOption2);
+        }
+
+        var initChart4 = function(datalist) {
+            var app = {};
+            var w = window.innerWidth;
+            var cellSize = [w / 8, w / 8];
+            var pieRadius = w / 20 - 5;
+
+            function getOffsetDays(time1, time2) {
+                var offsetTime = Math.abs(time1 - time2);
+                return Math.floor(offsetTime / (3600 * 24 * 1e3));
+            };
+            var days = getOffsetDays(Date.now(), (new Date(2020, 0, 26)).getTime());
+
+            function getNowFormatDate() {
+                var date = new Date();
+                var seperator1 = "-";
+                var year = date.getFullYear();
+                var month = date.getMonth() + 1;
+                var strDate = date.getDate() + 1;
+                if (month >= 1 && month <= 9) {
+                    month = "0" + month;
+                }
+                if (strDate >= 0 && strDate <= 9) {
+                    strDate = "0" + strDate;
+                }
+                var currentdate = year + seperator1 + month + seperator1 + strDate;
+                return currentdate;
+            }
+
+            function getVirtulData() {
+                var date = +echarts.number.parseDate('2020-01-26');
+                var end = +echarts.number.parseDate('2020-05-10');
+                var dayTime = 3600 * 24 * 1000;
+                var data = [];
+                for (var time = date; time < end; time += dayTime) {
+                    data.push([
+                        echarts.format.formatTime('yyyy-MM-dd', time),
+                        Math.floor(Math.random() * 10000)
+                    ]);
+                }
+                return data;
+            }
+
+            function getPieSeries(scatterData, chart) {
+                return echarts.util.map(scatterData, function(item, index) {
+                    var center = chart.convertToPixel('calendar', item);
+                    return {
+                        id: index + 'pie',
+                        type: 'pie',
+                        center: center,
+                        label: {
+                            normal: {
+                                show: false,
+                                formatter: '{c}',
+                                position: 'inside'
+                            },
+                            emphasis: {
+                                formatter: '{c}',
+                                position: 'inside'
+                            }
+                        },
+                        radius: pieRadius,
+                        data: [{
+                            name: '新增确诊',
+                            value: datalist[index][0]
+                        }, {
+                            name: '新增治愈',
+                            value: datalist[index][1]
+                        }, {
+                            name: '新增死亡',
+                            value: datalist[index][2]
+                        }, {
+                            name: '病患存量',
+                            value: datalist[index][3]
+                        }, {
+                            name: '数据获取失败',
+                            value: datalist[index][4]
+                        }, ]
+                    };
+                });
+            }
+
+            function getPieSeriesUpdate(scatterData, chart) {
+                return echarts.util.map(scatterData, function(item, index) {
+                    var center = chart.convertToPixel('calendar', item);
+                    return {
+                        id: index + 'pie',
+                        center: center
+                    };
+                });
+            }
+
+            var scatterData = getVirtulData();
+
+            option = {
+                title: {
+                    text: '病患变化日历图',
+                    left: 'center'
+                },
+                tooltip: {},
+                legend: {
+                    data: ['新增确诊', '新增治愈', '新增死亡', '病患存量'],
+                    top: 30,
+                    selected: {
+                        '病患存量': false
+                    }
+                },
+                calendar: {
+                    top: 120,
+                    left: 'center',
+                    orient: 'vertical',
+                    cellSize: cellSize,
+                    yearLabel: {
+                        show: false,
+                        textStyle: {
+                            fontSize: 30
+                        }
+                    },
+                    monthLabel: {
+                        nameMap: [
+                            '1', '2', '3',
+                            '4', '5', '6',
+                            '7', '8', '9',
+                            '10', '11', '12'
+                        ]
+                    },
+                    dayLabel: {
+                        margin: 20,
+                        firstDay: 7,
+                        nameMap: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+                    },
+                    range: ['2020-01-26', '2020-05-09']
+                },
+                series: [{
+                    id: 'label',
+                    type: 'scatter',
+                    coordinateSystem: 'calendar',
+                    symbolSize: 1,
+                    label: {
+                        normal: {
+                            show: true,
+                            formatter: function(params) {
+                                return echarts.format.formatTime('dd', params.value[0]);
+                            },
+                            offset: [-cellSize[0] / 2 + 10, -cellSize[1] / 2 + 10],
+                            textStyle: {
+                                color: '#000',
+                                fontSize: 14
+                            }
+                        }
+                    },
+                    data: scatterData
+                }]
+            };
+
+            var pieInitialized;
+            setTimeout(function() {
+                pieInitialized = true;
+                myChart3.setOption({
+                    series: getPieSeries(scatterData, myChart3)
+                });
+            }, 10);
+
+            app.onresize = function() {
+                if (pieInitialized) {
+                    myChart3.setOption({
+                        series: getPieSeriesUpdate(scatterData, myChart3)
+                    });
+                }
+            };
+            myChart3.hideLoading();
+            myChart3.setOption(option);
+        }
+    </script>
+</body>
+
+</html>

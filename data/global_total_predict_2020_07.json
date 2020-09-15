@@ -1,0 +1,291 @@
+[{
+        "Date": "2020-07-04",
+        "ConfirmedCases": 11492779,
+        "Fatalities": 567527
+    },
+    {
+        "Date": "2020-07-05",
+        "ConfirmedCases": 11674009,
+        "Fatalities": 577404
+    },
+    {
+        "Date": "2020-07-06",
+        "ConfirmedCases": 11858865,
+        "Fatalities": 587411
+    },
+    {
+        "Date": "2020-07-07",
+        "ConfirmedCases": 12047694,
+        "Fatalities": 597549
+    },
+    {
+        "Date": "2020-07-08",
+        "ConfirmedCases": 12239936,
+        "Fatalities": 607822
+    },
+    {
+        "Date": "2020-07-09",
+        "ConfirmedCases": 12434121,
+        "Fatalities": 618237
+    },
+    {
+        "Date": "2020-07-10",
+        "ConfirmedCases": 12628370,
+        "Fatalities": 628803
+    },
+    {
+        "Date": "2020-07-11",
+        "ConfirmedCases": 12824207,
+        "Fatalities": 639516
+    },
+    {
+        "Date": "2020-07-12",
+        "ConfirmedCases": 13023762,
+        "Fatalities": 650371
+    },
+    {
+        "Date": "2020-07-13",
+        "ConfirmedCases": 13227956,
+        "Fatalities": 661366
+    },
+    {
+        "Date": "2020-07-14",
+        "ConfirmedCases": 13436549,
+        "Fatalities": 672506
+    },
+    {
+        "Date": "2020-07-15",
+        "ConfirmedCases": 13648146,
+        "Fatalities": 683796
+    },
+    {
+        "Date": "2020-07-16",
+        "ConfirmedCases": 13860202,
+        "Fatalities": 695248
+    },
+    {
+        "Date": "2020-07-17",
+        "ConfirmedCases": 14072158,
+        "Fatalities": 706865
+    },
+    {
+        "Date": "2020-07-18",
+        "ConfirmedCases": 14287317,
+        "Fatalities": 718638
+    },
+    {
+        "Date": "2020-07-19",
+        "ConfirmedCases": 14507493,
+        "Fatalities": 730564
+    },
+    {
+        "Date": "2020-07-20",
+        "ConfirmedCases": 14732999,
+        "Fatalities": 742644
+    },
+    {
+        "Date": "2020-07-21",
+        "ConfirmedCases": 14962643,
+        "Fatalities": 754884
+    },
+    {
+        "Date": "2020-07-22",
+        "ConfirmedCases": 15193734,
+        "Fatalities": 767295
+    },
+    {
+        "Date": "2020-07-23",
+        "ConfirmedCases": 15424062,
+        "Fatalities": 779888
+    },
+    {
+        "Date": "2020-07-24",
+        "ConfirmedCases": 15657253,
+        "Fatalities": 792652
+    },
+    {
+        "Date": "2020-07-25",
+        "ConfirmedCases": 15895344,
+        "Fatalities": 805582
+    },
+    {
+        "Date": "2020-07-26",
+        "ConfirmedCases": 16138810,
+        "Fatalities": 818681
+    },
+    {
+        "Date": "2020-07-27",
+        "ConfirmedCases": 16386666,
+        "Fatalities": 831953
+    },
+    {
+        "Date": "2020-07-28",
+        "ConfirmedCases": 16636467,
+        "Fatalities": 845409
+    },
+    {
+        "Date": "2020-07-29",
+        "ConfirmedCases": 16886570,
+        "Fatalities": 859057
+    },
+    {
+        "Date": "2020-07-30",
+        "ConfirmedCases": 17140093,
+        "Fatalities": 872890
+    },
+    {
+        "Date": "2020-07-31",
+        "ConfirmedCases": 17398422,
+        "Fatalities": 886905
+    },
+    {
+        "Date": "2020-08-01",
+        "ConfirmedCases": 17661795.39,
+        "Fatalities": 901104.2578
+    },
+    {
+        "Date": "2020-08-02",
+        "ConfirmedCases": 17929342.84,
+        "Fatalities": 915492.6587
+    },
+    {
+        "Date": "2020-08-03",
+        "ConfirmedCases": 18199090.87,
+        "Fatalities": 930080.0437
+    },
+    {
+        "Date": "2020-08-04",
+        "ConfirmedCases": 18470348.66,
+        "Fatalities": 944871.4887
+    },
+    {
+        "Date": "2020-08-05",
+        "ConfirmedCases": 18745425.49,
+        "Fatalities": 959861.8481
+    },
+    {
+        "Date": "2020-08-06",
+        "ConfirmedCases": 19025436.23,
+        "Fatalities": 975050.0923
+    },
+    {
+        "Date": "2020-08-07",
+        "ConfirmedCases": 19310578.33,
+        "Fatalities": 990438.363
+    },
+    {
+        "Date": "2020-08-08",
+        "ConfirmedCases": 19600131.82,
+        "Fatalities": 1006031.974
+    },
+    {
+        "Date": "2020-08-09",
+        "ConfirmedCases": 19892459.31,
+        "Fatalities": 1021839.409
+    },
+    {
+        "Date": "2020-08-10",
+        "ConfirmedCases": 20186265.32,
+        "Fatalities": 1037868.023
+    },
+    {
+        "Date": "2020-08-11",
+        "ConfirmedCases": 20483697.85,
+        "Fatalities": 1054113.429
+    },
+    {
+        "Date": "2020-08-12",
+        "ConfirmedCases": 20786399.81,
+        "Fatalities": 1070573.003
+    },
+    {
+        "Date": "2020-08-13",
+        "ConfirmedCases": 21094942.72,
+        "Fatalities": 1087247.823
+    },
+    {
+        "Date": "2020-08-14",
+        "ConfirmedCases": 21408838.35,
+        "Fatalities": 1104142.629
+    },
+    {
+        "Date": "2020-08-15",
+        "ConfirmedCases": 21726538.71,
+        "Fatalities": 1121265.822
+    },
+    {
+        "Date": "2020-08-16",
+        "ConfirmedCases": 22045599.66,
+        "Fatalities": 1138628.907
+    },
+    {
+        "Date": "2020-08-17",
+        "ConfirmedCases": 22366758.65,
+        "Fatalities": 1156232.548
+    },
+    {
+        "Date": "2020-08-18",
+        "ConfirmedCases": 22693059,
+        "Fatalities": 1174069.554
+    },
+    {
+        "Date": "2020-08-19",
+        "ConfirmedCases": 23026042.47,
+        "Fatalities": 1192137.912
+    },
+    {
+        "Date": "2020-08-20",
+        "ConfirmedCases": 23365764.57,
+        "Fatalities": 1210440.732
+    },
+    {
+        "Date": "2020-08-21",
+        "ConfirmedCases": 23710794.61,
+        "Fatalities": 1228986.251
+    },
+    {
+        "Date": "2020-08-22",
+        "ConfirmedCases": 24058215.64,
+        "Fatalities": 1247787.833
+    },
+    {
+        "Date": "2020-08-23",
+        "ConfirmedCases": 24406104.72,
+        "Fatalities": 1266855.481
+    },
+    {
+        "Date": "2020-08-24",
+        "ConfirmedCases": 24758490.29,
+        "Fatalities": 1286178.873
+    },
+    {
+        "Date": "2020-08-25",
+        "ConfirmedCases": 25117697,
+        "Fatalities": 1305753.556
+    },
+    {
+        "Date": "2020-08-26",
+        "ConfirmedCases": 25484289.77,
+        "Fatalities": 1325581.144
+    },
+    {
+        "Date": "2020-08-27",
+        "ConfirmedCases": 25857114.6,
+        "Fatalities": 1345669.176
+    },
+    {
+        "Date": "2020-08-28",
+        "ConfirmedCases": 26233298.6,
+        "Fatalities": 1366031.12
+    },
+    {
+        "Date": "2020-08-29",
+        "ConfirmedCases": 26611167.36,
+        "Fatalities": 1386676.384
+    },
+    {
+        "Date": "2020-08-30",
+        "ConfirmedCases": 26994600,
+        "Fatalities": 1407595
+    }
+]

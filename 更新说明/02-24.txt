@@ -1,0 +1,2 @@
+完成charts页面（map*1，pie*4，charts*5）连接数据；
+map部分连接当前实时数据。

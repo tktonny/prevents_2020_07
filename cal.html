@@ -1,0 +1,474 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>预测模型</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description" content="疫情预测-疫情地图-2019-nCov">
+    <meta name="keywords" content="2020 wuhan Novel coronavirus, 武汉肺炎, geo, charts, 地图,疫情,疫情可视化,疫情预测, 2019-nCov, free,2019-nCoV, coronavirus, novel, visualization, map, china, wuhan, heatmap,wh">
+    <meta name="author" content="Tony Xia">
+    <link rel="icon" href="img/sufe.ico" type="images/x-ico" />
+    <link rel="stylesheet" type="text/css" href="css/head.css">
+    <link rel="stylesheet" type="text/css" href="./js/zui/css/zui-theme.css" />
+    <link rel="stylesheet" type="text/css" href="./js/zui/css/zui.css" />
+    <link rel="stylesheet" type="text/css" href="./js/zui/lib/chosen/chosen.min.css" />
+    <script src="https://cdn.bootcss.com/echarts/4.4.0-rc.1/echarts.min.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="js/backtotop.js"></script>
+    <style>
+        ul.nav-tabs {
+            margin-top: 20px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+        }
+        
+        ul.nav-tabs li {
+            margin: 0;
+            border-top: 1px solid #ddd;
+        }
+        
+        ul.nav-tabs li:first-child {
+            border-top: none;
+        }
+        
+        ul.nav-tabs li a {
+            margin: 0;
+            padding: 8px 16px;
+            border-radius: 0;
+        }
+        
+        ul.nav-tabs li.active a,
+        ul.nav-tabs li.active a:hover {
+            color: #fff;
+            background: #123555;
+            border: 1px solid #000;
+        }
+        
+        ul.nav-tabs li:first-child a {
+            border-radius: 4px 4px 0 0;
+        }
+        
+        ul.nav-tabs li:last-child a {
+            border-radius: 0 0 4px 4px;
+        }
+        
+        ul.nav-tabs.affix {
+            top: 60px;
+            /* Set the top position of pinned element */
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $("#myNav").affix({
+                offset: {
+                    top: 125
+                }
+            });
+        });
+    </script>
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy">
+    <div style="width:100%;height:50px;background-color: #123555">
+        <code>
+            <script>
+                console.info(   '                     ::::::::  :::    ::: :::::::::: :::::::::: \n' +
+                                '                   :+:    :+: :+:    :+: :+:        :+:         \n' +
+                                '                  +:+        +:+    +:+ +:+        +:+          \n' +
+                                '                 +#++:++#++ +#+    +:+ :#::+::#   +#++:++#      \n' +
+                                '                       +#+ +#+    +#+ +#+        +#+            \n' +
+                                '               #+#    #+# #+#    #+# #+#        #+#             \n' +
+                                '               ########   ########  ###        ##########       ')
+            </script>
+        </code>
+    </div>
+
+    <header>
+        <div style="width: 100%; height: 105px">
+            <img src="img/logo.png" alt="sufe sime" class="top">
+            <div id="top_right" class="visible-md visible-lg">
+                <p id='hide'>武汉加油 <span id="red">中国</span>加油</p>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://sime.shufe.edu.cn/" target="_blank">SUFE SIME</a>
+            </div>
+            <div id="menu" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="./index.html">&#160&#160&#160&#160主页&#160&#160&#160&#160</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            &#160&#160&#160&#160时空地图&#160&#160&#160&#160
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu navbar-inverse">
+                            <li><a href="./map_china.html" id="white">中国地图</a></li>
+                            <li><a href="./map_america.html" id="white">美国地图</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="./chart.html">&#160&#160&#160&#160可视化分析&#160&#160&#160&#160</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            &#160&#160&#160&#160疫情知识&#160&#160&#160&#160
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu navbar-inverse">
+                            <li><a href="./info_0.html" id="white">辟谣专区</a></li>
+                            <li><a href="./info_1.html" id="white">可信信息</a></li>
+                            <li><a href="./info_2.html" id="white">尚未证实</a></li>
+                            <li class="divider"></li>
+                            <li><a href="./news.html" id="white">各地新闻</a></li>
+                        </ul>
+                    </li>
+                    <li class="active"><a href="./cal.html">&#160&#160&#160&#160预测模型&#160&#160&#160&#160</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#modal">&#160&#160&#160&#160团队介绍&#160&#160&#160&#160</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <Modal id="modal" role="dialog" class="modal fade">
+        <div role="document" class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 id="Modal_Label" class="modal-title">关于我们</h1>
+                </div>
+                <div class="modal-body">
+                    <h4>团队介绍</h4>
+                    <p>&emsp;&emsp;来自于上海财经大学的三个信息人，在19年聚在一起准备用自己所学知识做些贡献。在韩潇老师的指导下，我们决定对传染病进行可视化与预测。在这之后爆发的新冠疫情，我们希望用自己做出的成果对疫情的防治贡献微薄之力。</p>
+                    <hr/>
+                    <h4>项目历程</h4>
+                    <p>&emsp;&emsp;自19年的下半年开始，团队自主学习知识，充实自身，提升能力，并在明确分工之后着手进行项目开发。</p>
+                    <p>在疫情爆发之后团队加紧项目开发的进程：</p>
+                    <ul>
+                        <li>运用 python 进行数据挖掘，爬取数据将应用于模型的建立以及疫情预测；</li>
+                        <li>使用 pandas及sklearn 进行模型建立完成较为准确的疫情预测；</li>
+                        <li>基于 echarts 对预测结果及爬取数据进行可视化 直观展现在地图以及各类图表之上。</li>
+                    </ul>
+                    <p>现如今我们仍在不断地更新优化，使功能更加完善页面更加美观。</p>
+                    <hr/>
+                    <h4>人员构成</h4>
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>人员</th>
+                                <th>专业</th>
+                                <th>职责</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>韩潇（指导老师）</td>
+                                <td>信息管理与电子商务系</td>
+                                <td>思路指导</td>
+                            </tr>
+                            <tr>
+                                <td>王郝东（组长）</td>
+                                <td>电子商务</td>
+                                <td>数据收集</td>
+                            </tr>
+                            <tr>
+                                <td>赖明昊</td>
+                                <td>信息管理与工程</td>
+                                <td>预测模型</td>
+                            </tr>
+                            <tr>
+                                <td>夏逸超</td>
+                                <td>信息管理与工程</td>
+                                <td>可视化&网页开发</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr/>
+                    <h4>申明</h4>
+                    <p>&emsp;&emsp;感谢<a href="https://ncov.dxy.cn/ncovh5/view/pneumonia" target="_Blank">丁香园</a>的疫情知识和数据，以及每一位抗疫前线的白衣天使。
+                        <br/>&emsp;&emsp;在此特地感谢 <a href="https://github.com/BlankerL" target="_Blank">Issac Lin</a> 、<a href="https://covidtracking.com/" target="_Blank">covidtracking</a> 以及<a href="https://www.tianapi.com/" target="_Blank">天行数据</a> 提供的
+                        <a href="https://lab.isaaclin.cn/nCoV/zh" target="_Blank">数据接口</a> ,为项目提供了极大的帮助。</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                </div>
+            </div>
+        </div>
+    </Modal>
+
+    <div id="fixedTools" class="totop position-fixed d-none d-xl-flex" style="right: 24px; bottom: 24px">
+        <button type="button" class="btn btn-light" title="返回顶部">▲</button>
+    </div>
+
+    <main class="container" style="width: 100%;">
+        <div class="row" style="width: 100%;">
+            <div class="col-md-2 visible-md visible-lg" id="myScrollspy">
+                <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="125">
+                    <li><a href="#section-1">传统的SEIR模型</a></li>
+                    <li><a href="#section-2">动态SEIR模型</a></li>
+                    <li><a href="#section-3">我们的模型</a></li>
+                    <li><a href="#section-4">实时R0监控</a></li>
+                </ul>
+                <div id="fixedTools" class="totop position-fixed d-none d-xl-flex" style="top: 250px">
+                    <div class="btn btn-light" style="width: 165px;">
+                        <p style="text-align: center;">模型预测图</p>
+                        <img src="img/gif_model1.gif" alt="模拟结果gif" />
+                        <p style="text-align: center;font-size:8px;">（点击返回顶部）</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <br>
+                <hr/>
+                <h5>在对传染病的预测建模中，一般采用的是传染病模型中常用的SEIR模型（Susceptible-Exposed-Infectious-Removed model）。但是，SEIR模型在用于实际情况模拟预测时有着一定的缺陷。考虑到本次传染病的实际情况，我们分别采用了Metapopulation SEIR 模型对本次疫情进行了建模模拟，采用了动态的SEIR模型（Dynamic  SEIR）来对本次疫情进行建模并预测。下面将分成三部分对分别对传统的SEIR模型、Metapopulation
+                    SEIR 模型、动态SEIR模型进行介绍。</h5>
+                <br id="section-1">
+                <hr/>
+                <h4>1、传统的SEIR模型</h4>
+                <p>传统的SEIR模型将在传染病传播过程中的人群分为以下几个类别：</p>
+                <ol>
+                    <li>（1）S类，易感者(Susceptible)，指未得病者，但缺乏免疫能力，与感染者接触后容易受到感染；</li>
+                    <li>（2）E类，潜伏者(Exposed)，指接触过感染者，但暂无能力传染给其他人的人，对潜伏期长的传染病适用；</li>
+                    <li>（3）I类，感染者(Infective)，指染上传染病的人，可以传播给S类成员，将其变为E类或I类成员；</li>
+                    <li>（4）R类，康复者(Recovered)，指被隔离或因病愈而具有免疫力的人。如免疫期有限，R类成员可以重新变为S类。</li>
+                </ol>
+                <br>
+                <p>其中，这几类人群之间的相互转换可以由如下的图片表示:</p>
+                <img src="img/cal0.png" alt="seir" width="350px" />
+                <br>
+                <br>
+                <p>以微分方程组的形式表示则为</p>
+                <div class="container" style="width: 100%;">
+                    <div class="col-md-8 col-sm-12">
+                        <p>其中，N=S+I+E+R，代表区域内的总人口。</p>
+                        <p>β为传染率，表示在传染病在健康态（S）的人与患病状态下（I）的人之间传播的概率。</p><br>
+                        <p>σ为潜伏率，表示在单位时间潜伏态的人（E）变为患病（I）的比率，与潜伏期Y互成倒数。</p><br>
+                        <p>γ为治愈率，表示在单位时间患病状态的人（I）变为康复者（R）的比例，与治愈时间D互为倒数。</p>
+                        <br>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <img src="img/cal1.png" alt="seir" />
+                        <img src="img/cal2.png" alt="seir" />
+                    </div>
+                </div>
+                <p>传统的SEIR模型通过求解如上微分方程组，即可模拟传染病在一个区域内的传播。</p>
+                <br id="section-2">
+                <hr/>
+                <h4>2、动态SEIR预测模型介绍</h4>
+                <p>在传统的SEIR模型中，传染率β为固定不变的常数，但是在疫情的具体情况中，随着政府管控的加强，民众防范意识提升，医疗技术的进一步发展，在实际情况下，传染率β应该随着时间逐步下降，所以，我们进一步假设SEIR模型中，β服从Hill decay function ，即β(t)=1/(1+(k/L)^k)，方程参数中的L表示传染率减半的时间，hill函数的图像由下图所示:</p>
+                <img src="img/cal3.png" alt="seir" />
+                <br>
+                <p>同时，考虑到在本次疫情中，存在轻症、重症等较为复杂的情况，为了更好的预测模型中的死亡人数，我们将原来SEIR模型中的R状态，拆分为了4个状态，分别是Recovered（治愈），Hospitalized（住院），Critical（重症），Death（死亡），这样，我们的新模型可以用如下微分方程组描述:</p>
+                <img src="img/cal4.png" alt="seir" style="height: 500px;" />
+                <p>模型中各参数的含义如下：</p>
+                <ul>
+                    <li>R_t=在t时刻的基本再生数，等于βt*平均感染期;</li>
+                    <li>T_inc = 平均潜伏期，一般为5.6天;</li>
+                    <li>T_inf = 平均感染期，一般 2.9 天;</li>
+                    <li>T_hosp = 在病人变为重症或者治愈的平均时间，一般为4天;</li>
+                    <li>T_crit = 病人平均在重症期的时间，一般为14天;</li>
+                    <li>m_a = 普通病人变为治愈的概率，假定为0.8;</li>
+                    <li>c_a =普通病人变为重症的概率，假定为0.1;</li>
+                    <li>f_a =重症病人死亡的概率，假定为0.3.</li>
+                </ul>
+                <p>以上假设参照了<a href="https://www.kaggle.com/covid-19-contributions" target="_Blank">www.kaggle.com/covid-19-contributions</a></p>
+                <p>为达到预测的目的，我们将模型与实际数据进行拟合，为求解最优的模型参数，我们求解如下误差目标函数的最小值:</p>
+                <img src="img/cal4.5.png" alt="seir" style="height: 180px;" />
+                <p>其中目标函数中的I_cum 代表实际累积患病人数，I_cumpre代表使用模型预测的累积患病人数，D_cum 代表实际累积死亡人数，D_cumpre代表使用模型预测的累积死亡人数，通过拟合模型求解最优参数，我们再使用最优模型对后来传染病传播情况进行预测。</p>
+                <br id="section-3">
+                <hr/>
+                <br>
+                <p>在本次预测中，我们使用了动态的SEIR模型进行传染病传播情况的预测。</p>
+                <br>
+                <h4>模型的局限性：</h4>
+                <ol>
+                    <li>1、模型对假设有较大的依赖，假设的不同可能会导致模型结果变化较大；</li>
+                    <li>2、部分参数可能会随着时间变化，比如治愈时间可能会随着时间推移变短；</li>
+                    <li>3、官方数据可能不完全，比如可能存在部分未就医患者，或者潜伏期未被统计到的人数；</li>
+                    <li>4、新的相关政策对疫情的影响较大，比如统计标准的变动往往会导致患病人数有较大的波动。</li>
+                </ol>
+                <br>
+                <h4>模型的准确率：</h4>
+                <h5>国内预测:</h5>
+                <p>我们将2月13日到2月19日的数据作为模型的输入，预测2月20到2月23日的实际患病人数，并与实际情况对比，结果如下：</p>
+                <div class="container" style="width: 100%;">
+                    <div class="col-md-6 col-sm-12">
+                        <img src="img/cal5.png" alt="seir" />
+                        <p style="text-align: center;">湖北</p>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <img src="img/cal6.png" alt="seir" />
+                        <p style="text-align: center;">非湖北</p>
+                    </div>
+                </div>
+                <p>可以看出，在短期内，模型的预测效果比较好，但是随着时间的推移，由于实际情况可能会发生进一步的变化，可能导致模型的误差会不断增大，所以仅用模型进行7天的预测。由于治愈率会逐步上升，且处于潜伏期的人数难以估计，所以模型在对累计病例数的预测上可能偏差较大。</p>
+                <p>同时，考虑到应对措施的进步，可以判断在长期内实际患病人数应该要低于模型预测值。</p>
+                <p>由于疑似病例的报告并不精确到省级，对处于潜伏期的人数难以估计，且湖北省的治愈率与死亡率均比较特殊，所以对湖北省的预测偏差可能较大。</p>
+                <br>
+                <h5>美国预测:</h5>
+                <img src="img/cal6.5.png" alt="seir" />
+                <p>可以看出，对于之前的数据，模型的拟合效果比较好，但是随着时间的推移，由于实际情况可能会发生进一步的变化，而模型对假设的依赖较大，这些假设与实际上的差异可能导致模型的误差会不断增大。</p>
+                <p>同时，考虑到应对措施的进步，可以判断在长期内实际患病人数应该要低于模型预测值。</p>
+                <p>由于对于美国，各州的防疫政策不同，故对美国整体进行模型估计的误差可能较大。</p>
+                <br id="section-4">
+                <hr/>
+                <h4>实时R0监测模型</h4>
+                <br>
+                <p>在任何流行病中，基本再生数R_0，代表每个感染者平均感染的人数，是对传染病传播能力评价的重要指标。但是，R_0只是传染病传染能力的一个简单的度量，它只考虑了在没有任何管控措施下传染病传播的情况，没有考虑到人们行为和管控的变化。</p>
+                <p>随着传染病的流行，越来越多的管控限制将改变R_0,我们把在t时刻的R_0值称为R_t。了解当前的R_t非常重要。当R_t&lt;1时，传染病将在很大一部分人群中传播。如果R_t&lt;1，传染病将在有机会感染许多人之前迅速减缓。R_t越低，传染病传播情况越容易管理。一般来说， R_t&lt;1，意味着传染病在控制之中。</p>
+                <p>对R_t值的评估在两个方面有较大的意义:</p>
+                <ol>
+                    <li>1、它帮助我们了解当前的管控措施在控制疫情方面的有效性;</li>
+                    <li>2、它告诉我们在当前情况下是否应该增加或减少管控措施.</li>
+                </ol>
+                <br>
+                <h4>实时R0监控算法</h4>
+                <br>
+                <p>我们认为，t时刻新增的感染人数k与R_t相关，同时R_t也和之前的所有R_t-m相关，所以，我们采用贝叶斯方程来进行R_t的计算:</p>
+                <img src="img/cal13.png" alt="seir" />
+                <p>其中，根据相关的传染病相关论文研究，我们假设:</p>
+                <img src="img/cal14.png" alt="seir" />
+                <br>
+                <img src="img/cal15.png" alt="seir" />
+                <p>根据以上公式，我们可以计算出所有天数R_t的概率分布，前2天的计算公式示例如下:</p>
+                <img src="img/cal16.png" alt="seir" />
+                <p>在求得所有R_t的概率分布之后，我们使用极大似然估计估计出每天的R_t值<br> 以美国全国的情况为例，R_t的变化情况如下:
+                </p>
+                <div id="usa-chart" style="width: 100%; height: 500px;"></div>
+                <hr/>
+            </div>
+        </div>
+        <p>模型的建立思路与实现方法主要来自于<br><a href="https://github.com/NSSAC/PatchSim" target="_Blank">https://github.com/NSSAC/PatchSim</a>以及<br> <a href="https://github.com/YiranJing/Coronavirus-Epidemic-2019-nCov" target="_Blank">https://github.com/YiranJing/Coronavirus-Epidemic-2019-nCov</a>，在此特别感谢！</p>
+        <p>参考论文：<i>Nowcasting and forecasting the potential domestic and international spread of the 2019-nCoV outbreak (Jan 31)</i></p>
+        <hr/>
+    </main>
+
+    <script>
+        var usachart = echarts.init(document.getElementById('usa-chart'));
+        $(document).ready(function() {
+            initusa_chart();
+        });
+
+        var initusa_chart = function() {
+            var option = {
+                title: {
+                    left: 'center',
+                    text: "real time R_t for US",
+                    textStyle: {
+                        fontSize: 20,
+                        color: "black"
+                    }
+                },
+                tooltip: {
+                    trigger: "axis"
+                },
+                dataZoom: [{
+                    type: 'slider',
+                    show: true,
+                    xAxisIndex: [0],
+                }, {
+                    type: 'inside',
+                    xAxisIndex: [0],
+                }, ],
+                legend: {
+                    data: ["ML", "Low_90", "High_90"],
+                    x: "right",
+                    textStyle: {
+                        color: 'black'
+                    }
+                },
+                toolbox: {
+                    show: false,
+                },
+                calculable: true,
+                xAxis: [{
+                    type: "category",
+                    boundaryGap: false,
+                    data: ["2020-03-04", "2020-03-05", "2020-03-06", "2020-03-07", "2020-03-08", "2020-03-09", "2020-03-10", "2020-03-11", "2020-03-12", "2020-03-13", "2020-03-14", "2020-03-15", "2020-03-16", "2020-03-17", "2020-03-18", "2020-03-19", "2020-03-20", "2020-03-21", "2020-03-22", "2020-03-23", "2020-03-24", "2020-03-25", "2020-03-26", "2020-03-27", "2020-03-28", "2020-03-29", "2020-03-30", "2020-03-31", "2020-04-01", "2020-04-02", "2020-04-03", "2020-04-04", "2020-04-05", "2020-04-06", "2020-04-07", "2020-04-08", "2020-04-09", "2020-04-10", "2020-04-11", "2020-04-12", "2020-04-13", "2020-04-14", "2020-04-15", "2020-04-16", "2020-04-17", "2020-04-18", "2020-04-19", "2020-04-20", "2020-04-21", "2020-04-22", "2020-04-23", "2020-04-24", "2020-04-25", "2020-04-26", "2020-04-27", "2020-04-28", "2020-04-29", "2020-04-30", "2020-05-01", "2020-05-02", "2020-05-03", "2020-05-04", "2020-05-05", "2020-05-06", "2020-05-07", "2020-05-08", "2020-05-09", "2020-05-10", "2020-05-11", "2020-05-12", "2020-05-13", "2020-05-14", "2020-05-15", "2020-05-16", "2020-05-17", "2020-05-18", "2020-05-19", "2020-05-20", "2020-05-21", "2020-05-22", "2020-05-23", "2020-05-24", "2020-05-25", "2020-05-26", "2020-05-27", "2020-05-28", "2020-05-29", "2020-05-30", "2020-05-31", "2020-06-01", "2020-06-02", "2020-06-03", "2020-06-04", "2020-06-05", "2020-06-06", "2020-06-07", "2020-06-08", "2020-06-09", "2020-06-10", "2020-06-11", "2020-06-12", "2020-06-13", "2020-06-14", "2020-06-15", "2020-06-16", "2020-06-17", "2020-06-18", "2020-06-19", "2020-06-20", "2020-06-21", "2020-06-22", "2020-06-23", "2020-06-24", "2020-06-25", "2020-06-26", "2020-06-27", "2020-06-28", "2020-06-29", "2020-06-30", "2020-07-01", "2020-07-02", "2020-07-03", "2020-07-04"],
+                    nameTextStyle: {
+                        color: "black"
+                    },
+                    axisLabel: {
+                        textStyle: {
+                            color: "black"
+                        }
+                    }
+                }],
+                yAxis: [{
+                    type: "value",
+                    axisLabel: {
+                        textStyle: {
+                            color: "black"
+                        }
+                    }
+                }],
+                series: [{
+                    name: "ML",
+                    type: "line",
+                    data: [0, 2.08, 2.09, 2.06, 2.24, 2.5, 2.79, 2.84, 2.86, 2.75, 2.77, 2.75, 3.47, 3.59, 3.58, 3.44, 3.45, 2.79, 2.37, 2.12, 2.07, 2.09, 2.11, 1.94, 1.88, 1.66, 1.53, 1.74, 1.77, 1.58, 1.34, 1.19, 0.93, 0.9500000000000001, 1.06, 1.22, 1.19, 1.03, 0.84, 0.8300000000000001, 0.9, 0.92, 1.06, 1.13, 0.96, 0.85, 0.92, 0.78, 1.09, 1.31, 1.34, 1.29, 1.02, 0.7000000000000001, 0.63, 0.62, 0.92, 1.23, 1.27, 1.04, 0.8300000000000001, 0.64, 0.67, 0.88, 1.05, 1, 0.85, 0.66, 0.59, 0.76, 1.01, 1.2, 1.21, 1.03, 0.78, 0.78, 0.87, 1.1, 1.18, 1.12, 0.9500000000000001, 0.79, 0.67, 0.75, 1, 1.2, 1.16, 1.13, 1, 0.9400000000000001, 0.9, 1.39, 1.38, 1.32, 1.04, 0.71, 0.49, 0.6, 0.68, 1.35, 1.31, 1.16, 1.07, 1.01, 1.12, 1.37, 1.49, 1.44, 1.32, 1.19, 1.22, 1.32, 1.49, 1.52, 1.47, 1.28, 1.16, 1.14, 1.23, 1.2, 1.23, 1.16, 1.08]
+                }, {
+                    name: "Low_90",
+                    type: "line",
+                    data: [0, 0.63, 1.11, 1.21, 1.5, 1.85, 2.22, 2.32, 2.37, 2.31, 2.37, 2.4, 3.15, 3.32, 3.34, 3.23, 3.27, 2.62, 2.23, 1.99, 1.93, 1.98, 1.99, 1.82, 1.77, 1.56, 1.44, 1.66, 1.68, 1.49, 1.26, 1.11, 0.85, 0.86, 0.97, 1.15, 1.12, 0.9500000000000001, 0.77, 0.75, 0.8200000000000001, 0.84, 0.98, 1.06, 0.88, 0.76, 0.84, 0.7000000000000001, 1.01, 1.23, 1.26, 1.22, 0.9400000000000001, 0.62, 0.54, 0.53, 0.84, 1.15, 1.18, 0.9500000000000001, 0.74, 0.55, 0.6, 0.79, 0.98, 0.92, 0.76, 0.5700000000000001, 0.5, 0.66, 0.92, 1.12, 1.13, 0.9500000000000001, 0.7000000000000001, 0.68, 0.77, 1, 1.1, 1.03, 0.87, 0.6900000000000001, 0.5700000000000001, 0.66, 0.91, 1.11, 1.07, 1.03, 0.9, 0.84, 0.81, 1.31, 1.3, 1.23, 0.9500000000000001, 0.62, 0.41, 0.51, 0.59, 1.25, 1.21, 1.07, 0.99, 0.93, 1.04, 1.28, 1.41, 1.35, 1.24, 1.12, 1.15, 1.24, 1.41, 1.45, 1.39, 1.2, 1.1, 1.08, 1.16, 1.13, 1.16, 1.09, 1.01]
+                }, {
+                    type: "line",
+                    name: "High_90",
+                    data: [10.81, 3.33, 3.02, 2.78, 2.87, 3.07, 3.31, 3.3, 3.26, 3.12, 3.11, 3.07, 3.74, 3.82, 3.77, 3.6, 3.59, 2.91, 2.49, 2.23, 2.16, 2.19, 2.19, 2.01, 1.95, 1.73, 1.6, 1.81, 1.83, 1.63, 1.4, 1.25, 0.99, 1, 1.11, 1.28, 1.25, 1.08, 0.9, 0.89, 0.96, 0.98, 1.12, 1.19, 1.02, 0.9, 0.98, 0.84, 1.15, 1.37, 1.39, 1.35, 1.07, 0.75, 0.68, 0.67, 0.98, 1.29, 1.32, 1.09, 0.88, 0.6900000000000001, 0.74, 0.9400000000000001, 1.12, 1.06, 0.91, 0.72, 0.65, 0.8200000000000001, 1.08, 1.27, 1.28, 1.1, 0.85, 0.84, 0.93, 1.16, 1.25, 1.18, 1.02, 0.85, 0.73, 0.8200000000000001, 1.07, 1.27, 1.23, 1.19, 1.06, 1, 0.97, 1.46, 1.45, 1.38, 1.1, 0.77, 0.56, 0.67, 0.75, 1.41, 1.37, 1.22, 1.14, 1.08, 1.19, 1.43, 1.55, 1.49, 1.38, 1.25, 1.28, 1.37, 1.54, 1.57, 1.51, 1.32, 1.21, 1.19, 1.27, 1.24, 1.27, 1.2, 1.12]
+                }],
+                grid: {
+                    x: 50,
+                    x2: 30,
+                    y: 10,
+                    y2: 30
+                },
+                backgroundColor: "white",
+                color: ["#ff7f50", "#87cefa", "#da70d6", "#32cd32", "#6495ed", "#ff69b4", "#ba55d3", "#cd5c5c", "#ffa500", "#40e0d0", "#1e90ff", "#ff6347", "#7b68ee", "#00fa9a", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b"]
+            }
+            usachart.setOption(option);
+        }
+    </script>
+
+    <footer style="background-color: #1e1e1e10;">
+        <div class="container">
+            <div class="col-md-4" style="color: rgba(0, 0, 0, 0.5);text-align:center;height: 120px;">
+                <div class="col-md-12" style="height: 15px;"></div>
+                <div>
+                    <div class="col-xs-4" style="text-align:center;">
+                        <img class="myImg2" src="img/头像1.jpg" alt="t.k.t">
+                    </div>
+                    <div class="col-xs-4" style="text-align:center;">
+                        <img class="myImg2" src="img/头像2.jpg" alt="lmh">
+                    </div>
+                    <div class="col-xs-4" style="text-align:center;">
+                        <img class="myImg2" src="img/头像3.jpg" alt="cc">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 visible-md visible-lg" style="text-align:center;height: 120px;line-height: 100px;">
+                <div style="border-top:none; border-left:1px solid rgba(0, 0, 0, 0.1); border-right:1px solid rgba(0, 0, 0, 0.1); ">
+                    <a class="footer-logo" href="http://www.shufe.edu.cn/"><img class="myImg" src="img/footer-logo.png" alt="SUFE"></a>
+                </div>
+            </div>
+            <div class="col-md-4" style="color: rgba(0, 0, 0, 0.5);text-align:center;height: 120px;">
+                <div class="visible-md visible-lg" style="height: 15px;"></div>
+                <p>地址：上海市国定路777号 上海财经大学</p>
+                <p>Copyright © 2020 prevents.xyz All Rights Reserved</p>
+                <p style="text-align:center;line-height: 10px;">地图审图号：GS(2019)5218|豫ICP 备20005042号</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
