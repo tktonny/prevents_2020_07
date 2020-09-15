@@ -85,7 +85,7 @@ var initChart = function() {
 
 var initChart2 = function(datalist) {
     $.ajax({
-        url: "../data/predict_.csv",
+        url: "/prevents_2020_07/data/predict_.csv",
         type: 'get',
         success: function(res) {
             var chartdata = res;
