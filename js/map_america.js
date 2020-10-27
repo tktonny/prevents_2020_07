@@ -1,6 +1,6 @@
 var dataUrl = "https://covidtracking.com/api/v1/states/daily.csv";
-var dataUrlBackup = "/prevents_2020_07/data/USA-2019-nCoV-20200705.csv";
-var predictUrl = "/prevents_2020_07/data/US_state_pre_2020_07.csv";
+var dataUrlBackup = "./data/USA-2019-nCoV-20200705.csv";
+var predictUrl = "./data/US_state_pre_2020_07.csv";
 var w = window.innerWidth;
 var myChart = echarts.init(document.getElementById('america'));
 myChart.showLoading({

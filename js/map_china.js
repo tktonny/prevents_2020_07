@@ -1,5 +1,5 @@
 var dataUrl = "https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.csv";
-var dataUrlBackup = "/prevents_2020_07/data/Wuhan-2019-nCoV-20200514.csv";
+var dataUrlBackup = "./data/Wuhan-2019-nCoV-20200514.csv";
 var w = window.innerWidth;
 $(document).ready(function() {
     initChart();

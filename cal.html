@@ -12,8 +12,8 @@
     <meta name="description" content="疫情预测-疫情地图-2019-nCov">
     <meta name="keywords" content="2020 wuhan Novel coronavirus, 武汉肺炎, geo, charts, 地图,疫情,疫情可视化,疫情预测, 2019-nCov, free,2019-nCoV, coronavirus, novel, visualization, map, china, wuhan, heatmap,wh">
     <meta name="author" content="Tony Xia">
-    <link rel="icon" href="img/sufe.ico" type="images/x-ico" />
-    <link rel="stylesheet" type="text/css" href="css/head.css">
+    <link rel="icon" href="./img/sufe.ico" type="images/x-ico" />
+    <link rel="stylesheet" type="text/css" href="./css/head.css">
     <link rel="stylesheet" type="text/css" href="./js/zui/css/zui-theme.css" />
     <link rel="stylesheet" type="text/css" href="./js/zui/css/zui.css" />
     <link rel="stylesheet" type="text/css" href="./js/zui/lib/chosen/chosen.min.css" />
@@ -21,7 +21,7 @@
     <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="js/backtotop.js"></script>
+    <script src="./js/backtotop.js"></script>
     <style>
         ul.nav-tabs {
             margin-top: 20px;
@@ -93,7 +93,7 @@
 
     <header>
         <div style="width: 100%; height: 105px">
-            <img src="img/logo.png" alt="sufe sime" class="top">
+            <img src="./img/logo.png" alt="sufe sime" class="top">
             <div id="top_right" class="visible-md visible-lg">
                 <p id='hide'>武汉加油 <span id="red">中国</span>加油</p>
             </div>
@@ -225,7 +225,7 @@
                 <div id="fixedTools" class="totop position-fixed d-none d-xl-flex" style="top: 250px">
                     <div class="btn btn-light" style="width: 165px;">
                         <p style="text-align: center;">模型预测图</p>
-                        <img src="img/gif_model1.gif" alt="模拟结果gif" />
+                        <img src="./img/gif_model1.gif" alt="模拟结果gif" />
                         <p style="text-align: center;font-size:8px;">（点击返回顶部）</p>
                     </div>
                 </div>
@@ -247,7 +247,7 @@
                 </ol>
                 <br>
                 <p>其中，这几类人群之间的相互转换可以由如下的图片表示:</p>
-                <img src="img/cal0.png" alt="seir" width="350px" />
+                <img src="./img/cal0.png" alt="seir" width="350px" />
                 <br>
                 <br>
                 <p>以微分方程组的形式表示则为</p>
@@ -260,8 +260,8 @@
                         <br>
                     </div>
                     <div class="col-md-4 col-sm-12">
-                        <img src="img/cal1.png" alt="seir" />
-                        <img src="img/cal2.png" alt="seir" />
+                        <img src="./img/cal1.png" alt="seir" />
+                        <img src="./img/cal2.png" alt="seir" />
                     </div>
                 </div>
                 <p>传统的SEIR模型通过求解如上微分方程组，即可模拟传染病在一个区域内的传播。</p>
@@ -269,10 +269,10 @@
                 <hr/>
                 <h4>2、动态SEIR预测模型介绍</h4>
                 <p>在传统的SEIR模型中，传染率β为固定不变的常数，但是在疫情的具体情况中，随着政府管控的加强，民众防范意识提升，医疗技术的进一步发展，在实际情况下，传染率β应该随着时间逐步下降，所以，我们进一步假设SEIR模型中，β服从Hill decay function ，即β(t)=1/(1+(k/L)^k)，方程参数中的L表示传染率减半的时间，hill函数的图像由下图所示:</p>
-                <img src="img/cal3.png" alt="seir" />
+                <img src="./img/cal3.png" alt="seir" />
                 <br>
                 <p>同时，考虑到在本次疫情中，存在轻症、重症等较为复杂的情况，为了更好的预测模型中的死亡人数，我们将原来SEIR模型中的R状态，拆分为了4个状态，分别是Recovered（治愈），Hospitalized（住院），Critical（重症），Death（死亡），这样，我们的新模型可以用如下微分方程组描述:</p>
-                <img src="img/cal4.png" alt="seir" style="height: 500px;" />
+                <img src="./img/cal4.png" alt="seir" style="height: 500px;" />
                 <p>模型中各参数的含义如下：</p>
                 <ul>
                     <li>R_t=在t时刻的基本再生数，等于βt*平均感染期;</li>
@@ -286,7 +286,7 @@
                 </ul>
                 <p>以上假设参照了<a href="https://www.kaggle.com/covid-19-contributions" target="_Blank">www.kaggle.com/covid-19-contributions</a></p>
                 <p>为达到预测的目的，我们将模型与实际数据进行拟合，为求解最优的模型参数，我们求解如下误差目标函数的最小值:</p>
-                <img src="img/cal4.5.png" alt="seir" style="height: 180px;" />
+                <img src="./img/cal4.5.png" alt="seir" style="height: 180px;" />
                 <p>其中目标函数中的I_cum 代表实际累积患病人数，I_cumpre代表使用模型预测的累积患病人数，D_cum 代表实际累积死亡人数，D_cumpre代表使用模型预测的累积死亡人数，通过拟合模型求解最优参数，我们再使用最优模型对后来传染病传播情况进行预测。</p>
                 <br id="section-3">
                 <hr/>
@@ -306,11 +306,11 @@
                 <p>我们将2月13日到2月19日的数据作为模型的输入，预测2月20到2月23日的实际患病人数，并与实际情况对比，结果如下：</p>
                 <div class="container" style="width: 100%;">
                     <div class="col-md-6 col-sm-12">
-                        <img src="img/cal5.png" alt="seir" />
+                        <img src="./img/cal5.png" alt="seir" />
                         <p style="text-align: center;">湖北</p>
                     </div>
                     <div class="col-md-6 col-sm-12">
-                        <img src="img/cal6.png" alt="seir" />
+                        <img src="./img/cal6.png" alt="seir" />
                         <p style="text-align: center;">非湖北</p>
                     </div>
                 </div>
@@ -319,7 +319,7 @@
                 <p>由于疑似病例的报告并不精确到省级，对处于潜伏期的人数难以估计，且湖北省的治愈率与死亡率均比较特殊，所以对湖北省的预测偏差可能较大。</p>
                 <br>
                 <h5>美国预测:</h5>
-                <img src="img/cal6.5.png" alt="seir" />
+                <img src="./img/cal6.5.png" alt="seir" />
                 <p>可以看出，对于之前的数据，模型的拟合效果比较好，但是随着时间的推移，由于实际情况可能会发生进一步的变化，而模型对假设的依赖较大，这些假设与实际上的差异可能导致模型的误差会不断增大。</p>
                 <p>同时，考虑到应对措施的进步，可以判断在长期内实际患病人数应该要低于模型预测值。</p>
                 <p>由于对于美国，各州的防疫政策不同，故对美国整体进行模型估计的误差可能较大。</p>
@@ -338,13 +338,13 @@
                 <h4>实时R0监控算法</h4>
                 <br>
                 <p>我们认为，t时刻新增的感染人数k与R_t相关，同时R_t也和之前的所有R_t-m相关，所以，我们采用贝叶斯方程来进行R_t的计算:</p>
-                <img src="img/cal13.png" alt="seir" />
+                <img src="./img/cal13.png" alt="seir" />
                 <p>其中，根据相关的传染病相关论文研究，我们假设:</p>
-                <img src="img/cal14.png" alt="seir" />
+                <img src="./img/cal14.png" alt="seir" />
                 <br>
-                <img src="img/cal15.png" alt="seir" />
+                <img src="./img/cal15.png" alt="seir" />
                 <p>根据以上公式，我们可以计算出所有天数R_t的概率分布，前2天的计算公式示例如下:</p>
-                <img src="img/cal16.png" alt="seir" />
+                <img src="./img/cal16.png" alt="seir" />
                 <p>在求得所有R_t的概率分布之后，我们使用极大似然估计估计出每天的R_t值<br> 以美国全国的情况为例，R_t的变化情况如下:
                 </p>
                 <div id="usa-chart" style="width: 100%; height: 500px;"></div>
@@ -447,13 +447,13 @@
                 <div class="col-md-12" style="height: 15px;"></div>
                 <div>
                     <div class="col-xs-4" style="text-align:center;">
-                        <img class="myImg2" src="img/头像1.jpg" alt="t.k.t">
+                        <img class="myImg2" src="./img/头像1.jpg" alt="t.k.t">
                     </div>
                     <div class="col-xs-4" style="text-align:center;">
-                        <img class="myImg2" src="img/头像2.jpg" alt="lmh">
+                        <img class="myImg2" src="./img/头像2.jpg" alt="lmh">
                     </div>
                     <div class="col-xs-4" style="text-align:center;">
-                        <img class="myImg2" src="img/头像3.jpg" alt="cc">
+                        <img class="myImg2" src="./img/头像3.jpg" alt="cc">
                     </div>
                 </div>
             </div>
