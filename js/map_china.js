@@ -4,54 +4,57 @@ var w = window.innerWidth;
 $(document).ready(function() {
     initChart();
 });
+
+//初始化echarts
 var myChart = echarts.init(document.getElementById('china'));
-myChart.showLoading({
+myChart.showLoading({ //等待加载数据时显示加载动画
     animation: 'QuarticIn',
     text: 'Loading',
 });
 
 var initChart = function() {
-    $.ajax({
+    $.ajax({ //ajax
         url: dataUrlBackup,
         type: 'get',
-        success: function(res) {
+        success: function(res) { //获取疫情数据 处理csv文件
             var chartData = res;
             var datalist = [];
             var Data = [];
-            var relArr = chartData.split("\n");
-            console.log(relArr);
-            if (!$.isEmptyObject(relArr) && relArr.length > 1) {
-                for (var key = 1, len = relArr.length; key < len; key++) {
+            var relArr = chartData.split("\n"); //分行
+            console.log(relArr); //控制台输出
+            if (!$.isEmptyObject(relArr) && relArr.length > 1) { //数据格式正确
+                for (var key = 1, len = relArr.length; key < len; key++) { //去除表头（第二行开始）
                     var values = relArr[key];
                     if (!$.isEmptyObject(values)) {
                         //console.log(values);
                         var obj = {};
-                        var objArr = values.split(",");
+                        var objArr = values.split(","); //将每个数据抽出
                         var dataTime = new Date(objArr[0]);
-                        var dateTime = new Date(2020, 0, 26);
+                        var dateTime = new Date(2020, 0, 26); //20200126 数据中第一个日期
 
-                        function formatDate(date) {
+                        function formatDate(date) { //处理日期的函数
                             var m = date.getMonth() + 1;
                             m = m < 10 ? ('0' + m) : m;
                             var d = date.getDate();
                             d = d < 10 ? ('0' + d) : d;
                             return (m + '-' + d);
                         }
-                        obj["province"] = objArr[3];
+                        obj["province"] = objArr[3]; //css中第四列是省（下同）
                         obj["cityName"] = objArr[5];
-                        obj["confirmedCount"] = objArr[7] - objArr[9] - objArr[10];
-                        obj["updateTime"] = formatDate(dataTime);
-                        if (dateTime.getTime() <= dataTime.getTime()) {
+                        obj["confirmedCount"] = objArr[7] - objArr[9] - objArr[10]; //现存确诊=确诊-治愈-死亡
+                        obj["updateTime"] = formatDate(dataTime); //更新时间的日期
+                        if (dateTime.getTime() <= dataTime.getTime()) { //处理完一行后存入data数组
                             Data.push(obj);
                         }
                     }
                 }
             }
 
-            for (var i in Data) {
-                var showtime = Data[i].updateTime;
+            for (var i in Data) { //将地级市与时间组合
+                var showtime = Data[i].updateTime; //之前处理好的日期
                 if ($.isEmptyObject(datalist[showtime]))
                     datalist[showtime] = [];
+                //直辖市不在区分各曲线 保持地图上散点密度不会在直辖市过大
                 var name1 = Data[i].province;
                 var confirmedCount = Data[i].confirmedCount ? Data[i].confirmedCount : Data[i].confirmedCount;
                 var name2 = Data[i].cityName;
@@ -71,7 +74,7 @@ var initChart = function() {
             //console.log(datalist['02-10']);
             //date = date.reverse;
             //console.log(date);
-            initChart2(datalist);
+            initChart2(datalist); //处理完的疫情数据
             return;
         },
         error: function(res) {
@@ -83,30 +86,30 @@ var initChart = function() {
     });
 }
 
-var initChart2 = function(datalist) {
+var initChart2 = function(datalist) { //前一个数据集用datalist传参
     $.ajax({
-        url: "/prevents_2020_07/data/predict_.csv",
-        type: 'get',
+        url: "/prevents_2020_07/data/predict_.csv", //这是我们预测的数据 也是csv格式 这里将两个数据集合并成一个datalist数组 以便进一步用echarts
+        type: 'get', //合并时的方法是各自处理两个数据集 获取当前日期 在前一个数据集的日期后加上预测数据集的日期与对应数据
         success: function(res) {
             var chartdata = res;
             var data = [];
             var city = [];
             var date = [];
             var firstline = [];
-            var relArr = chartdata.split("\n");
+            var relArr = chartdata.split("\n"); //分行
             console.log(relArr);
             if (!$.isEmptyObject(relArr)) {
                 firstline = relArr[0];
-                city = firstline.split(",");
+                city = firstline.split(","); //获取表头每列
                 //console.log(city);
                 for (var key = 1, len = relArr.length; key < len; key++) {
                     var values = relArr[key];
                     if (!$.isEmptyObject(values)) {
                         //console.log(values);
                         var objArr = values.split(",");
-                        var dataTime = new Date(objArr[0]);
+                        var dataTime = new Date(objArr[0]); //数据的日期
                         //console.log(objArr[0]);
-                        var dateTime = new Date(Date.now());
+                        var dateTime = new Date(Date.now()); //当前日期
                         //console.log(dataTime);
                         //console.log(dateTime);
                         function formatDate(date) {
@@ -132,7 +135,7 @@ var initChart2 = function(datalist) {
                 }
             }
             //console.log(data);
-            for (var i in data) {
+            for (var i in data) { //将预测数据集的数据加在前一个数据集之后
                 var showtime = data[i].updateTime;
                 if ($.isEmptyObject(datalist[showtime])) {
                     datalist[showtime] = [];
@@ -147,12 +150,12 @@ var initChart2 = function(datalist) {
             //console.log(datalist['02-28'][0]);
             //console.log(datalist['02-28']);
             //console.log(datalist['02-27']);
-            for (var i in datalist) {
+            for (var i in datalist) { //日期的数据 用来生成echarts中的timeline
                 date.push(i);
             }
             //date = date.reverse;
             //console.log(date);
-            if (w < 1000) {
+            if (w < 1000) { //窗口大小 对应两种不同布局 随便看一种就行了
                 initChart_small(date, datalist);
             } else {
                 initChart_big(date, datalist);
@@ -162,13 +165,15 @@ var initChart2 = function(datalist) {
     });
 }
 
+
+//接下来是echarts部分
 var initChart_small = function(date, datalist) {
-    function getOffsetDays(time1, time2) {
+    function getOffsetDays(time1, time2) { //两日只差函数
         var offsetTime = Math.abs(time1 - time2);
         return Math.floor(offsetTime / (3600 * 24 * 1e3));
     };
 
-    function getdaynow() {
+    function getdaynow() { //获取当前日期
         var date = new Date();
         var mytime = date.toLocaleDateString();
         if (mytime[6] == "/") {
@@ -189,7 +194,7 @@ var initChart_small = function(date, datalist) {
         return m + '-' + d;
     };
 
-    var geoCoordMap = {
+    var geoCoordMap = { //地理信息 用于生成散点和热图 还有区域选择
             "北京市": [116.395645, 39.929986],
             "天津市": [117.210813, 39.14393],
             "上海市": [121.487899, 31.249162],
@@ -609,7 +614,7 @@ var initChart_small = function(date, datalist) {
                         return resall;
                     };
         */
-    var convertData = function(datalist) {
+    var convertData = function(datalist) { //将数据与地理信息绑定
         var res = [];
         for (var i = 0; i < datalist.length; i++) {
             var geoCoord = geoCoordMap[datalist[i].name];
@@ -625,7 +630,7 @@ var initChart_small = function(date, datalist) {
     };
 
     var option = {
-        baseOption: {
+        baseOption: { //baseoption 随时间轴不改变
             timeline: {
                 axisType: 'category',
                 realtime: true,
@@ -694,7 +699,7 @@ var initChart_small = function(date, datalist) {
                 }
             },
 
-            legend: {
+            legend: { //按钮
                 selected: {
                     '热图': false,
                 },
@@ -717,7 +722,7 @@ var initChart_small = function(date, datalist) {
                 }
             },
 
-            brush: {
+            brush: { //区域选择工具
                 outOfBrush: {
                     color: 'gray'
                 },
@@ -733,7 +738,7 @@ var initChart_small = function(date, datalist) {
                 geoIndex: 0
             },
 
-            toolbox: {
+            toolbox: { //右上角工具栏
                 iconStyle: {
                     normal: {
                         borderColor: '#fff'
@@ -955,7 +960,7 @@ var initChart_small = function(date, datalist) {
                 return b.value - a.value;
             }).slice(0, 5))
         ];
-        option.options.push({
+        option.options.push({ //options设置
             title: {
                 top: 10,
                 text: n + '新冠患者存量状况',
@@ -979,9 +984,9 @@ var initChart_small = function(date, datalist) {
 
     myChart.hideLoading();
     myChart.setOption(option);
-    myChart.on('brushselected', renderBrushed);
-    myChart.on('timelineplaychanged', jojo);
-    myChart.on('timelinechanged', notice);
+    myChart.on('brushselected', renderBrushed); //区域选择
+    myChart.on('timelineplaychanged', jojo); //时间轴播放 theworld音效果=
+    myChart.on('timelinechanged', notice); //时间轴向后 预测提醒
     myChart.on('click', sufe);
     window.timelineIndex = 0;
     //getOffsetDays(Date.now(), (new Date(2020, 0, 26)).getTime());
@@ -996,7 +1001,7 @@ var initChart_small = function(date, datalist) {
         return resultDateStr;
     }
 
-    setTimeout(function() {
+    setTimeout(function() { //初始设定
         myChart.dispatchAction({
             type: 'brush',
             areas: [{
@@ -1012,7 +1017,7 @@ var initChart_small = function(date, datalist) {
         });
     }, 0);
 
-    function renderBrushed(params) {
+    function renderBrushed(params) { //区域选择 右侧柱状图展示
         console.log(timelineIndex);
         var mainSeries = params.batch[0].selected[0];
         var selectedItems = [];
