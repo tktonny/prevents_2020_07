@@ -100,6 +100,8 @@ $(document).ready(function() {
                 }
                 return;
             }
+            alert("自2022年12月25日起中国国家卫健委不再发布每日疫情消息。如想查看疫情可视化地图可前往http://crash.tktonny.top");
+            window.open('http://crash.tktonny.top/map_china_coronavirus.html', '_blank');
             alert("获取数据失败");
         },
         error: function(res) {
@@ -154,6 +156,8 @@ $(document).ready(function() {
                 return;
             }
             alert("获取数据失败");
+            alert("自2023年3月10日起约翰·霍普金斯大学的“新冠资源中心”停止对于新冠数据的实时报告。如想查看疫情可视化地图可前往http://crash.tktonny.top");
+            window.open('http://crash.tktonny.top/map_china_coronavirus.html', '_blank');
         },
         error: function(res) {
             if (res.state() === "rejected" && !this.url.includes(dataUrlBackup3)) {
